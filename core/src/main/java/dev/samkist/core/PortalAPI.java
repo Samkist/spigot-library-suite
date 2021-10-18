@@ -29,22 +29,20 @@ public class PortalAPI {
         return this.active_portals;
     }
     public Portal get(Portal portal) {
-        for (Portal p : this.active_portals) {
-            if(p == portal) return p;
-        }
-        return null;
+        return this.active_portals
+                .stream()
+                .filter(p -> p.equals(portal))
+                .findFirst()
+                .orElse(null);
     }
     public Portal get(int id) {
-        for (Portal p : this.active_portals) {
-            if (p.getId() == id) {
-                return p;
-            }
-        }
-        return null;
+        return this.active_portals
+                .stream()
+                .filter(p -> p.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
     public void reload() {
-        for (Portal p : this.active_portals) {
-            p.build();
-        }
+        active_portals.forEach(Portal::build);
     }
 }
