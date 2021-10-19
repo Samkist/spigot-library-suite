@@ -42,7 +42,7 @@ public class Godmode implements CommandExecutor, Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         if (GODS.contains((Player)e.getPlayer())) {
-            ((Player)e.getPlayer()).sendMessage("[COMMANDER] Godmode enabled!");
+            ((Player)e.getPlayer()).sendMessage("[COMMANDER] Godmode is enabled!");
         }
     }
 }

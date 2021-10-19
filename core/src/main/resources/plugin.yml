@@ -10,21 +10,47 @@ load: STARTUP
 prefix: PluginSuite - CORE
 version: 1.0.0
 commands:
-  balance:
-    aliases: [ bal ]
-    description: View balance
-    usage: /balance <player>
-    permission: core.economy
   economy:
     aliases: [ eco ]
     description: Administrative economy commands.
     usage: /eco [set|withdraw|deposit|compare] <player>
-    permission: core.economy.admin
+    permission: economy.admin
+  balance:
+    aliases: [ bal ]
+    description: View balance
+    usage: /balance <?player>
+    permission: economy.balance
   baltop:
     description: View economy moguls.
     usage: /baltop
-    permission: core.economy
+    permission: economy.baltop
   pay:
     description: Transfer money to another player.
     usage: /pay <player> <amount>
-    permission: core.economy
+    permission: economy.pay
+  heal:
+    description: Heal players
+    usage: /heal <?player>
+    permission: playerstate.heal
+  feed:
+    description: Feed players
+    usage: /feed <?player>
+    permission: playerstate.feed
+  xp:
+    description: Manage player xp
+    usage: /xp [set|get|add] <player>
+    permission: playerstate.xp
+  give:
+    aliases: [ i ]
+    description: Give players items
+    usage: /give <?player> <item> <?amount>
+    permission: playerstate.give
+  cleanse:
+    description: Remove all potion effects from a player
+    usage: /cleanse <?player>
+    permission: playerstate.cleanse
+  gamemode:
+    aliases: [ gm ]
+    description: Change a players gamemode
+    usage: /gamemode <?player> <0|survival|1|creative>
+    permission: playerstate.cleanse
