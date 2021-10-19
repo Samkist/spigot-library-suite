@@ -1,6 +1,7 @@
-package dev.samkist.core;
+package dev.samkist.core.storage.local;
 
 
+import dev.samkist.core.Core;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 

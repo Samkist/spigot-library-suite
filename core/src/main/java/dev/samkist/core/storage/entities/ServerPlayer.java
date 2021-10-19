@@ -1,4 +1,4 @@
-package dev.samkist.core.storage;
+package dev.samkist.core.storage.entities;
 
 import dev.morphia.annotations.Entity;
 import dev.morphia.mapping.codec.references.MorphiaProxy;
