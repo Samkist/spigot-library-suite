@@ -1,18 +1,24 @@
 plugins {
-    id 'java'
+    id "com.github.johnrengelman.shadow" version "7.1.0"
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+
+
+group = 'dev.samkist'
+version = '1.0-SNAPSHOT'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
 
 repositories {
     mavenCentral()
     maven { url 'https://papermc.io/repo/repository/maven-public/' }
     maven { url "https://repo.dmulloy2.net/repository/public/" }
     maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
-    maven {
-        url = 'https://nexus.iridiumdevelopment.net/repository/maven-public/'
-    }
+    maven { url 'https://nexus.iridiumdevelopment.net/repository/maven-public/' }
     //https://nexus.iridiumdevelopment.net/repository/maven-public/com/iridium/IridiumColorAPI/1.0.5/IridiumColorAPI-1.0.5.pom
     //https://nexus.iridiumdevelopment.net/com/iridium/IridiumColorAPI/1.0.5/IridiumColorAPI-1.0.5.pom
 }
@@ -24,6 +30,7 @@ dependencies {
     compileOnly 'dev.morphia.morphia:morphia-core:2.2.1'
     compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0";
     implementation 'com.iridium:IridiumColorAPI:1.0.5'
+    compileOnly 'me.clip:placeholderapi:2.10.10'
 
 }
 
