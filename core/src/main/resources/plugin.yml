@@ -1,0 +1,11 @@
+main: dev.samkist.core.Core
+name: PluginSuite
+api-version: 1.17
+description: A plugin suite!
+database: true
+authors:
+  - cbotte21
+  - Samkist
+load: STARTUP
+prefix: PluginSuite
+version: 1.0.0
