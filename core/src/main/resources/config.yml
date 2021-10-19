@@ -1,0 +1,34 @@
+
+# +----------------------------------------------------------------------------------------------+ #
+# |                                                                                              | #
+# |                                      MONGODB DATABASE SETTINGS                               | #
+# |                                                                                              | #
+# |                          Controls how to connect to the server database.                     | #
+# |                                                                                              | #
+# +----------------------------------------------------------------------------------------------+ #
+database:
+  user: ''
+  name: '' # NEEDS DB NAME
+  password: ''
+  host: ''
+  port: ''
+  connectionString: ''
+  # +----------------------------------------------------------------------------------------------+ #
+  # |                                                                                              | #
+  # |                                      DATABASE DEFAULTS                                       | #
+  # |                                                                                              | #
+  # |                   Default data to store upon connection to MongoDB                           | #
+  # |                                                                                              | #
+  # +----------------------------------------------------------------------------------------------+ #
+defaults:
+  chatFormats: #NAME/ID WILL BE DEFAULT
+    permission: 'chat.default'
+    messageFormat: '%luckperms_prefix% %player_displayname% &8»&7 %player_message%'
+    priority: 99999
+  joinLeaveFormats: #NAME/ID WILL BE DEFAULT
+    permission: 'joinleave.default'
+    joinFormat: '&e%player_name% &7has arrived!'
+    leaveFormat: '&e%player_name% &7has departed!'
+  pluginMessages:
+    motd:
+      format: '&eWelcome back to Server &7%player_name%!'
