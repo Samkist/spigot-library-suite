@@ -7,5 +7,5 @@ authors:
   - cbotte21
   - Samkist
 load: STARTUP
-prefix: PluginSuite
+prefix: PluginSuite - CORE
 version: 1.0.0
