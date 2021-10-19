@@ -10,20 +10,20 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class Economy implements CommandExecutor {
-    public void recipt(Player p) {
+    public void receipt(Player p) {
         p.sendMessage("[ECONOMY] Balance: $"+new ServerPlayer(p).getBalance().toString());
     }
-    public void compareRecipt(Player player, Player prospect) {
+    public void compareReceipt(Player player, Player prospect) {
         player.sendMessage("[ECONOMY] You have $"+String.valueOf(Math.abs(this.get(player) - this.get(prospect)))+((this.get(player) > this.get(prospect)) ? " more " : " fewer "+"dollars!"));
     }
     public boolean compare(Player player, Player prospect) {
         return (this.get(player) > this.get(prospect));
     }
-    public boolean atleast(Player p, int amount) {
+    public boolean atLeast(Player p, int amount) {
         return (amount <= this.get(p));
     }
     public boolean transfer(Player player, Player prospect, int amount) {
-        if (this.atleast(player, amount)) {
+        if (this.atLeast(player, amount)) {
             this.withdraw(player, amount);
             this.deposit(prospect, amount);
             return true;
@@ -47,10 +47,10 @@ public class Economy implements CommandExecutor {
         switch (command.getName()) {
             case "balance":
                 if (args.length == 1) {
-                    this.recipt(Bukkit.getPlayer(args[0]));
+                    this.receipt(Bukkit.getPlayer(args[0]));
                 } else {
                     if (!(sender instanceof Player)) return false;
-                    this.recipt((Player) sender);
+                    this.receipt((Player) sender);
                 }
                 break;
             case "baltop":
@@ -69,7 +69,7 @@ public class Economy implements CommandExecutor {
                 } else if (args[0] == "withdraw") {
                     this.withdraw(p, amount);
                 } else if (args[0] == "compare") {
-                    this.compareRecipt((Player)sender, Bukkit.getPlayer(args[0]));
+                    this.compareReceipt((Player)sender, Bukkit.getPlayer(args[0]));
                 } else {
                     return false;
                 }
