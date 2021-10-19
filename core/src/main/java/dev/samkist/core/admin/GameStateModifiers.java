@@ -19,7 +19,7 @@ public class GameStateModifiers implements CommandExecutor, Listener {
     public static void onPlayerJoin(PlayerJoinEvent e) {
         ServerPlayer p = new ServerPlayer(e.getPlayer());
         if (p.isBanned()) {
-
+            e.getPlayer().banPlayer(p.getBanReason());
         }
     }
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
