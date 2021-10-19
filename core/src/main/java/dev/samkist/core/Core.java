@@ -28,6 +28,8 @@ public class Core extends JavaPlugin {
         this.getCommand("heal").setExecutor(new PlayerStateModifiers());
         this.getCommand("cleanse").setExecutor(new PlayerStateModifiers());
         this.getCommand("gamemode").setExecutor(new PlayerStateModifiers());
+        this.getCommand("enderchest").setExecutor(new PlayerStateModifiers());
+        this.getCommand("inventorysee").setExecutor(new PlayerStateModifiers());
         this.getCommand("balance").setExecutor(new Economy());
         this.getCommand("baltop").setExecutor(new Economy());
         this.getCommand("pay").setExecutor(new Economy());

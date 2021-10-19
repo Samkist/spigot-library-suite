@@ -54,3 +54,13 @@ commands:
     description: Change a players gamemode
     usage: /gamemode <?player> <0|survival|1|creative>
     permission: playerstate.cleanse
+  enderchest:
+    aliases: [ echest ]
+    description: Alter a players enderchest
+    usage: /enderchest <?player>
+    permission: playerstate.enderchest
+  inventorysee:
+    aliases: [ invsee ]
+    description: Alter a players inventory
+    usage: /inventorysee <player>
+    permission: playerstate.inventory

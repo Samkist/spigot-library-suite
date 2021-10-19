@@ -7,9 +7,14 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
+
+/*
+TODO: Might want to get a fetch player class to get an offline player if not online!
+ */
 
 public class PlayerStateModifiers implements CommandExecutor {
     public static void setHealth(Player p, double level) {
@@ -53,6 +58,18 @@ public class PlayerStateModifiers implements CommandExecutor {
         } else {
             PlayerStateModifiers.setCreative(p);
         }
+    }
+    public static void openInventory(Player player, Inventory inventory) {
+        player.openInventory(inventory);
+    }
+    public static void openInventory(Player player, Player supplier) {
+        PlayerStateModifiers.openInventory(player, supplier.getInventory());
+    }
+    public static void openEnderchest(Player p) {
+        PlayerStateModifiers.openInventory(p, p.getEnderChest());
+    }
+    public static void openEnderchest(Player toRecieve, Player toSupply) {
+        PlayerStateModifiers.openInventory(toRecieve, toSupply.getEnderChest());
     }
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -125,6 +142,18 @@ public class PlayerStateModifiers implements CommandExecutor {
                 } else {
                     PlayerStateModifiers.changeGamemode((Player)sender);
                 }
+            case "enderchest":
+                if (args.length == 1) {
+                    PlayerStateModifiers.openInventory((Player)sender, Bukkit.getPlayer(args[0]));
+                    ((Player)sender).sendMessage("[PluginSuite] You have opened "+Bukkit.getPlayer(args[0]).getName()+"'s enderchest!");
+                } else {
+                    PlayerStateModifiers.openEnderchest((Player)sender);
+                    ((Player)sender).sendMessage("[PluginSuite] Enderchest opened!");
+                }
+            case "inventorysee":
+                if (args.length != 1) return false;
+                PlayerStateModifiers.openInventory((Player)sender, Bukkit.getPlayer(args[0]));
+                ((Player)sender).sendMessage("[PluginSuite] You have opened "+Bukkit.getPlayer(args[0]).getName()+"'s inventory!");
             default:
                 break;
         }
