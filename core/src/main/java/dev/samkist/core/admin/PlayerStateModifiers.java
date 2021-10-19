@@ -7,16 +7,23 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 /*
 TODO: Might want to get a fetch player class to get an offline player if not online!
  */
 
-public class PlayerStateModifiers implements CommandExecutor {
+public class PlayerStateModifiers implements CommandExecutor, Listener {
+    public ArrayList<Player> ACTIVE_GODMODE = new ArrayList<Player>();
     public static void setHealth(Player p, double level) {
         p.setHealth(level);
     }
@@ -70,6 +77,46 @@ public class PlayerStateModifiers implements CommandExecutor {
     }
     public static void openEnderchest(Player toRecieve, Player toSupply) {
         PlayerStateModifiers.openInventory(toRecieve, toSupply.getEnderChest());
+    }
+    public static void enableFlight(Player p) {
+        p.setAllowFlight(true);
+        p.sendMessage("[PluginSuite] Flight enabled!");
+    }
+    public static void disableFlight(Player p) {
+        p.setAllowFlight(false);
+        p.sendMessage("[PluginSuite] Flight disabled!");
+    }
+    public static boolean isFlying(Player p) {
+        return p.getAllowFlight();
+    }
+    public static void toggleFlight(Player p) {
+        if (PlayerStateModifiers.isFlying(p)) {
+            PlayerStateModifiers.disableFlight(p);
+        } else {
+            PlayerStateModifiers.enableFlight(p);
+        }
+    }
+    public boolean isGodmode(Player p) {
+        return this.ACTIVE_GODMODE.contains(p);
+    }
+    public void enableGodmode(Player p) {
+        this.ACTIVE_GODMODE.add(p);
+        p.sendMessage("[PluginSuite] Godmode enabled!");
+    }
+    public void disableGodmode(Player p) {
+        this.ACTIVE_GODMODE.remove(p);
+        p.sendMessage("[PluginSuite] Godmode disabled!");
+    }
+    public void toggleGodmode(Player p) {
+        if (this.isGodmode(p)) {
+            this.disableGodmode(p);
+        } else {
+            this.enableGodmode(p);
+        }
+    }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled=false)
+    public void onDamage(EntityDamageEvent e) {
+        if (e.getEntity() instanceof Player && this.isGodmode((Player)e.getEntity())) e.setCancelled(true);
     }
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -158,6 +205,40 @@ public class PlayerStateModifiers implements CommandExecutor {
                 if (args.length != 1) return false;
                 PlayerStateModifiers.openInventory((Player)sender, Bukkit.getPlayer(args[0]));
                 ((Player)sender).sendMessage("[PluginSuite] You have opened "+Bukkit.getPlayer(args[0]).getName()+"'s inventory!");
+            case "fly":
+                if (args.length == 2) {
+                    if (args[1].equals("1") || args[1].equals("true")) {
+                        PlayerStateModifiers.enableFlight(Bukkit.getPlayer(args[0]));
+                    } else if (args[1].equals("0") || args[1].equals("false")) {
+                        PlayerStateModifiers.disableFlight(Bukkit.getPlayer(args[0]));
+                    }
+                } else if (args.length == 1) {
+                    if (args[0].equals("1") || args[0].equals("true")) {
+                        PlayerStateModifiers.enableFlight((Player)sender);
+                    } else if (args[0].equals("0") || args[0].equals("false")) {
+                        PlayerStateModifiers.disableFlight((Player)sender);
+                    }
+                } else {
+                    PlayerStateModifiers.toggleFlight((Player)sender);
+                }
+                break;
+            case "godmode":
+                if (args.length == 2) {
+                    if (args[1].equals("1") || args[1].equals("true")) {
+                        this.enableGodmode(Bukkit.getPlayer(args[0]));
+                    } else if (args[1].equals("0") || args[1].equals("false")) {
+                        this.disableGodmode(Bukkit.getPlayer(args[0]));
+                    } else return false;
+                } else if (args.length == 1) {
+                    if (args[0].equals("1") || args[0].equals("true")) {
+                        this.enableGodmode((Player)sender);
+                    } else if (args[0].equals("0") || args[0].equals("false")) {
+                        this.disableGodmode((Player)sender);
+                    } else return false;
+                } else {
+                    this.toggleGodmode((Player)sender);
+                }
+                break;
             default:
                 return false;
         }

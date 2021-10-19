@@ -3,8 +3,6 @@ package dev.samkist.core;
 import dev.samkist.core.admin.*;
 import dev.samkist.core.economy.Economy;
 import dev.samkist.core.utils.ChatInstance;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Core extends JavaPlugin {
@@ -14,13 +12,12 @@ public class Core extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Godmode godMode = new Godmode();
         ChatInstance chatInstance = new ChatInstance();
+        PlayerStateModifiers godmode = new PlayerStateModifiers();
 
         this.getServer().getPluginManager().registerEvents(chatInstance, this);
-        this.getServer().getPluginManager().registerEvents(godMode, this);
-
-        //this.getCommand("godmode").setExecutor(godMode);
+        this.getServer().getPluginManager().registerEvents(godmode, this);
+        //this.getCommand("godmode").setExecutor(godmode);
 
         this.getCommand("give").setExecutor(new PlayerStateModifiers());
         this.getCommand("xp").setExecutor(new PlayerStateModifiers());
@@ -30,6 +27,8 @@ public class Core extends JavaPlugin {
         this.getCommand("gamemode").setExecutor(new PlayerStateModifiers());
         this.getCommand("enderchest").setExecutor(new PlayerStateModifiers());
         this.getCommand("inventorysee").setExecutor(new PlayerStateModifiers());
+        this.getCommand("fly").setExecutor(new PlayerStateModifiers());
+        this.getCommand("godmode").setExecutor(godmode);
         this.getCommand("balance").setExecutor(new Economy());
         this.getCommand("baltop").setExecutor(new Economy());
         this.getCommand("pay").setExecutor(new Economy());
