@@ -7,9 +7,14 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven { url 'https://papermc.io/repo/repository/maven-public/' }
+    maven { url "https://repo.dmulloy2.net/repository/public/" }
+    maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
     maven {
-        url 'https://papermc.io/repo/repository/maven-public/'
+        url = 'https://nexus.iridiumdevelopment.net/repository/maven-public/'
     }
+    //https://nexus.iridiumdevelopment.net/repository/maven-public/com/iridium/IridiumColorAPI/1.0.5/IridiumColorAPI-1.0.5.pom
+    //https://nexus.iridiumdevelopment.net/com/iridium/IridiumColorAPI/1.0.5/IridiumColorAPI-1.0.5.pom
 }
 
 dependencies {
@@ -17,6 +22,9 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
     compileOnly 'io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT'
     compileOnly 'dev.morphia.morphia:morphia-core:2.2.1'
+    compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0";
+    implementation 'com.iridium:IridiumColorAPI:1.0.5'
+
 }
 
 test {
