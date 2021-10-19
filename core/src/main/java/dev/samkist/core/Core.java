@@ -34,6 +34,8 @@ public class Core extends JavaPlugin {
         this.getCommand("baltop").setExecutor(new Economy());
         this.getCommand("pay").setExecutor(new Economy());
         this.getCommand("eco").setExecutor(new Economy());
+        this.getCommand("teleport").setExecutor(new Teleport());
+        this.getCommand("tphere").setExecutor(new Teleport());
     }
 
     @Override

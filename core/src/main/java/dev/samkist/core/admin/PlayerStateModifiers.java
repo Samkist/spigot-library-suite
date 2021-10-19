@@ -126,6 +126,7 @@ public class PlayerStateModifiers implements CommandExecutor {
                     PlayerStateModifiers.cleanse((Player)sender);
                     ((Player)sender).sendMessage("[PluginSuite] You have been cleansed!");
                 }
+                break;
             case "gamemode":
                 if (args.length == 1) {
                     if (args[0].equals("1") || args[0].equals("creative") || args[0].equals("c")) {
@@ -142,6 +143,8 @@ public class PlayerStateModifiers implements CommandExecutor {
                 } else {
                     PlayerStateModifiers.changeGamemode((Player)sender);
                 }
+                sender.sendMessage("[PluginSuite] Gamemode set!");
+                break;
             case "enderchest":
                 if (args.length == 1) {
                     PlayerStateModifiers.openInventory((Player)sender, Bukkit.getPlayer(args[0]));
@@ -150,14 +153,14 @@ public class PlayerStateModifiers implements CommandExecutor {
                     PlayerStateModifiers.openEnderchest((Player)sender);
                     ((Player)sender).sendMessage("[PluginSuite] Enderchest opened!");
                 }
+                break;
             case "inventorysee":
                 if (args.length != 1) return false;
                 PlayerStateModifiers.openInventory((Player)sender, Bukkit.getPlayer(args[0]));
                 ((Player)sender).sendMessage("[PluginSuite] You have opened "+Bukkit.getPlayer(args[0]).getName()+"'s inventory!");
             default:
-                break;
+                return false;
         }
-        sender.sendMessage("[PluginSuite] Gamemode set!");
         return true;
     }
     public PlayerStateModifiers() {

@@ -64,3 +64,12 @@ commands:
     description: Alter a players inventory
     usage: /inventorysee <player>
     permission: playerstate.inventory
+  teleport:
+    aliases: [ tp ]
+    description: Teleport a player
+    usage: /teleport <to> <?final>
+    permission: teleport.teleport
+  tphere:
+    description: Teleport a player to you
+    usage: /tphere <player>
+    permission: teleport.tphere
