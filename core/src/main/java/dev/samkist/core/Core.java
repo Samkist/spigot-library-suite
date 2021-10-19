@@ -17,6 +17,7 @@ public class Core extends JavaPlugin {
 
         this.getServer().getPluginManager().registerEvents(chatInstance, this);
         this.getServer().getPluginManager().registerEvents(godmode, this);
+        this.getServer().getPluginManager().registerEvents(new GameStateModifiers(), this);
         //this.getCommand("godmode").setExecutor(godmode);
 
         this.getCommand("give").setExecutor(new PlayerStateModifiers());
@@ -33,6 +34,7 @@ public class Core extends JavaPlugin {
         this.getCommand("baltop").setExecutor(new Economy());
         this.getCommand("pay").setExecutor(new Economy());
         this.getCommand("eco").setExecutor(new Economy());
+        this.getCommand("ban").setExecutor(new GameStateModifiers());
     }
 
     @Override

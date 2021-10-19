@@ -73,3 +73,7 @@ commands:
     description: Make a player fly!
     usage: /fly <player> <1|true|0|false>
     permission: playerstate.fly
+  ban:
+    description: Ban a player.
+    usage: /ban <player> <?cheats|other>
+    permission: gamestate.ban
