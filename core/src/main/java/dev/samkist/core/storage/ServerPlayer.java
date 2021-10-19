@@ -15,7 +15,9 @@ public class ServerPlayer {
     private Decimal128 balance;
     private Integer votes;
     private Integer secondsPlayed;
+    private Boolean banned;
     private String joinDate;
+    private String banReason;
 
     public ServerPlayer(Player player) {
         MorphiaProxy.class.getName();
@@ -23,7 +25,9 @@ public class ServerPlayer {
         this.lastUsername = player.getName();
         this.balance = new Decimal128(0);
         this.votes = 0;
+        this.banReason = "";
         this.secondsPlayed = 0;
+        this.banned = false;
         this.joinDate = Calendar.getInstance().getTime().toString();
     }
 
@@ -35,8 +39,10 @@ public class ServerPlayer {
         this.uuid = uuid;
         this.lastUsername = lastUsername;
         this.balance = balance;
+        this.banReason = "";
         this.votes = votes;
         this.secondsPlayed = secondsPlayed;
+        this.banned = false;
         this.joinDate = joinDate;
     }
 
@@ -87,4 +93,12 @@ public class ServerPlayer {
     public void setJoinDate(String joinDate) {
         this.joinDate = joinDate;
     }
+
+    public void setBanned(Boolean banned) { this.banned = banned; }
+
+    public boolean isBanned() { return this.banned; }
+
+    public String getBanReason() { return this.banReason; }
+
+    public void setBanReason(String reason) { this.banReason = reason; }
 }
