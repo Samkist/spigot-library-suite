@@ -1,4 +1,4 @@
-package dev.samkist.commander.commands;
+package dev.samkist.core.admin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

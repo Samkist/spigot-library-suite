@@ -9,3 +9,22 @@ authors:
 load: STARTUP
 prefix: PluginSuite - CORE
 version: 1.0.0
+commands:
+  balance:
+    aliases: [ bal ]
+    description: View balance
+    usage: /balance <player>
+    permission: core.economy
+  economy:
+    aliases: [ eco ]
+    description: Administrative economy commands.
+    usage: /eco [set|withdraw|deposit|compare] <player>
+    permission: core.economy.admin
+  baltop:
+    description: View economy moguls.
+    usage: /baltop
+    permission: core.economy
+  pay:
+    description: Transfer money to another player.
+    usage: /pay <player> <amount>
+    permission: core.economy

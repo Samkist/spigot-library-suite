@@ -1,4 +1,4 @@
-package dev.samkist.commander.commands;
+package dev.samkist.core.admin;
 
 /*
 TODO: Not working.
@@ -26,6 +26,7 @@ public class Godmode implements CommandExecutor, Listener {
                 GODS.remove((Player)sender);
             } else {
                 GODS.add((Player) sender);
+                ((Player)sender).sendMessage("Player added: "+GODS.toString());
             }
             ((Player)sender).sendMessage("Godmode "+(GODS.contains((Player)sender) ? "enabled!" : "disabled!"));
             return true;
@@ -34,15 +35,14 @@ public class Godmode implements CommandExecutor, Listener {
     }
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled=false)
     public void onDamage(EntityDamageEvent e) {
-        if (GODS.contains((Player)e.getEntity())) {
+        if (e.getEntity() instanceof Player && GODS.contains((Player)e.getEntity())) {
             e.setCancelled(true);
-            e.getEntity().sendMessage("[COMMANDER] Shield working...");
         }
     }
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        if (GODS.contains(e.getPlayer())) {
-            e.getPlayer().sendMessage("[COMMANDER] Godmode enabled!");
+        if (GODS.contains((Player)e.getPlayer())) {
+            ((Player)e.getPlayer()).sendMessage("[COMMANDER] Godmode enabled!");
         }
     }
 }
