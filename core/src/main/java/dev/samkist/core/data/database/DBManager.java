@@ -82,11 +82,18 @@ public class DBManager {
                 -> s.save(new ArrayList<>(ServerPlayer.values())));
     }
 
-    public String topPlayerByField(String field) {
-        if(!init) return "";
-        final Aggregation<ServerPlayer> aggregation = datastore.aggregate(ServerPlayer.class).group(Group.of(Group.id(field)).field(field)
-        ).sort(Sort.on().descending(field));
-        return aggregation.execute(ServerPlayer.class).toList().get(0).getLastUsername();
+    public Optional<ServerPlayer> topPlayerByField(String field) {
+        if(!init) return Optional.empty();
+        final Aggregation<ServerPlayer> aggregation = datastore.aggregate(ServerPlayer.class).group(Group.group(Group.id(field)).field(field)
+        ).sort(Sort.sort().descending(field));
+        return Optional.ofNullable(aggregation.execute(ServerPlayer.class).toList().get(0));
+    }
+
+    public List<ServerPlayer> topPlayersByField(String field) {
+        if(!init) return List.of();
+        final Aggregation<ServerPlayer> aggregation = datastore.aggregate(ServerPlayer.class).group(Group.group(Group.id(field)).field(field)
+        ).sort(Sort.sort().descending(field));
+        return aggregation.execute(ServerPlayer.class).toList();
     }
 
     public void saveServerPlayer(Player player, ServerPlayer ServerPlayer) {

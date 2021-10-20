@@ -42,7 +42,7 @@ public class DataManager {
         dbManager.saveServerPlayer(player, serverPlayer);
     }
 
-    public String topPlayerByField(String field) {
+    public Optional<ServerPlayer> topPlayerByField(String field) {
         return dbManager.topPlayerByField(field);
     }
 
