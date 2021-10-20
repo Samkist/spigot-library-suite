@@ -13,6 +13,9 @@ public class Economy implements CommandExecutor {
     public void receipt(Player p) {
         p.sendMessage("[ECONOMY] Balance: $"+new ServerPlayer(p).getBalance().toString());
     }
+    public void getOtherReceipt(Player recipient, Player prospect) {
+        recipient.sendMessage("[ECONOMY] Balance: $"+new ServerPlayer(prospect).getBalance().toString());
+    }
     public void compareReceipt(Player player, Player prospect) {
         player.sendMessage("[ECONOMY] You have $"+String.valueOf(Math.abs(this.get(player) - this.get(prospect)))+((this.get(player) > this.get(prospect)) ? " more " : " fewer "+"dollars!"));
     }
@@ -47,7 +50,7 @@ public class Economy implements CommandExecutor {
         switch (command.getName()) {
             case "balance":
                 if (args.length == 1) {
-                    this.receipt(Bukkit.getPlayer(args[0]));
+                    this.getOtherReceipt((Player)sender, Bukkit.getPlayer(args[0]));
                 } else {
                     if (!(sender instanceof Player)) return false;
                     this.receipt((Player) sender);
