@@ -1,6 +1,9 @@
 package dev.samkist.core;
 
+import com.mongodb.DB;
 import dev.samkist.core.admin.*;
+import dev.samkist.core.data.DataManager;
+import dev.samkist.core.data.database.DBManager;
 import dev.samkist.core.economy.Economy;
 import dev.samkist.core.data.local.FileManager;
 import dev.samkist.core.utils.ChatInstance;
@@ -9,6 +12,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Core extends JavaPlugin {
 
     private final FileManager fileManager = new FileManager(this);
+    private DBManager dbManager;
+    private DataManager dataManager;
     public static final long LAST_START_TIME = System.currentTimeMillis();
 
     @Override
@@ -44,5 +49,13 @@ public class Core extends JavaPlugin {
 
     public FileManager getFileManager() {
         return this.fileManager;
+    }
+
+    public DBManager getDbManager() {
+        return this.dbManager;
+    }
+
+    public DataManager getDataManager() {
+        return this.dataManager;
     }
 }
