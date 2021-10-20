@@ -1,6 +1,5 @@
 package dev.samkist.core;
 
-import com.mongodb.DB;
 import com.mongodb.MongoCredential;
 import dev.samkist.core.admin.*;
 import dev.samkist.core.data.DataManager;
