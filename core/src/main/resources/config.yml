@@ -8,11 +8,11 @@
 # +----------------------------------------------------------------------------------------------+ #
 database:
   user: ''
-  name: '' # NEEDS DB NAME
+  name: 'server' # NEEDS DB NAME
   password: ''
   host: ''
   port: ''
-  connectionString: ''
+  connectionString: 'mongodb+srv://samkist:tjJKUiMMsxRkDf3@cluster0.f0w7d.mongodb.net/server?retryWrites=true&w=majority'
   # +----------------------------------------------------------------------------------------------+ #
   # |                                                                                              | #
   # |                                      DATABASE DEFAULTS                                       | #
