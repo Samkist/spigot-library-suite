@@ -2,6 +2,7 @@ package dev.samkist.core;
 
 import dev.samkist.core.admin.*;
 import dev.samkist.core.economy.Economy;
+import dev.samkist.core.data.local.FileManager;
 import dev.samkist.core.utils.ChatInstance;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -39,5 +40,9 @@ public class Core extends JavaPlugin {
 
     @Override
     public void onDisable() {
+    }
+
+    public FileManager getFileManager() {
+        return this.fileManager;
     }
 }
