@@ -1,6 +1,6 @@
 package dev.samkist.core.economy;
 
-import dev.samkist.core.storage.ServerPlayer;
+import dev.samkist.core.data.entities.ServerPlayer;
 import org.bson.types.Decimal128;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

@@ -1,4 +1,4 @@
-package dev.samkist.core.storage.entities;
+package dev.samkist.core.data.entities;
 
 import dev.morphia.annotations.Entity;
 import dev.morphia.mapping.codec.references.MorphiaProxy;
@@ -6,7 +6,6 @@ import org.bson.types.Decimal128;
 import org.bukkit.entity.Player;
 
 import java.util.Calendar;
-import java.util.UUID;
 
 @Entity(value = "serverPlayer", useDiscriminator = false)
 public class ServerPlayer {

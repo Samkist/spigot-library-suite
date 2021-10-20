@@ -1,4 +1,4 @@
-package dev.samkist.core.storage.entities;
+package dev.samkist.core.data.entities;
 
 import dev.morphia.annotations.Id;
 

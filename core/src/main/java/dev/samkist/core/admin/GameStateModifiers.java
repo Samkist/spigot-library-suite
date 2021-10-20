@@ -1,6 +1,6 @@
 package dev.samkist.core.admin;
 
-import dev.samkist.core.storage.ServerPlayer;
+import dev.samkist.core.data.entities.ServerPlayer;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
