@@ -1,0 +1,11 @@
+main: dev.samkist.lobby.Lobby
+name: Lobby
+api-version: 1.17
+description: Server hub components
+database: true
+authors:
+  - cbotte21
+  - Samkist
+load: STARTUP
+prefix: Lobby
+version: 1.0.0

@@ -1,5 +1,4 @@
 include 'lobby'
-include 'lobby'
 include 'core'
-include 'commander'
+include 'manipulator'
 

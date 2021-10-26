@@ -32,7 +32,6 @@ dependencies {
     implementation 'com.iridium:IridiumColorAPI:1.0.5'
     compileOnly 'me.clip:placeholderapi:2.10.10'
     compileOnly 'net.luckperms:api:5.3'
-
 }
 
 test {
