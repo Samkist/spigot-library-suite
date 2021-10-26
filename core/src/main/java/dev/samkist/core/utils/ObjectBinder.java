@@ -9,6 +9,7 @@ import java.util.ArrayList;
  */
 
 public class ObjectBinder {
+    public ObjectBinder() {}
     private class Record {
         Player p;
         Object obj;
@@ -46,5 +47,13 @@ public class ObjectBinder {
             }
         }
         return null;
+    }
+    public boolean instanceExists(Player p) {
+        for (Record record : this.memory) {
+            if (record.getPlayer() == p) {
+                return true;
+            }
+        }
+        return false;
     }
 }
