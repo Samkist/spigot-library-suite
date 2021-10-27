@@ -10,6 +10,7 @@ public class Kit {
     public String name;
     public String description;
     public String permission;
+    public boolean DISABLED = false;
     public int cooldown;
     private ArrayList<ItemStack> items;
     public Kit(String name, String description, String permission) { //CREATE

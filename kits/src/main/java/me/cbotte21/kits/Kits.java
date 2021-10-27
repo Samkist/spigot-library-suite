@@ -9,6 +9,7 @@ NOTE: Have not tried running yet
 TODO:
  - Have YAML cooldowns... Store [UUID, KIT_NAME, TIMESTAMP]... On kit.redeem, check check if on CD
  - Store items in kit, on YMLConn.save Loop through items and save give command name
+ - Add boolean DISABLED in KitManager.kits, scan for it on loop.
  */
 
 public class Kits extends JavaPlugin {

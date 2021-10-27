@@ -28,6 +28,20 @@ public class KitManager implements CommandExecutor {
         this.reload();
         return true;
     }
+    public Kit getKit(String name) {
+        for (Kit kit : this.kits) {
+            if (kit.name == name) return kit;
+        }
+        return null;
+    }
+    public void deleteKit(Kit kit) {
+        this.kits.remove(kit);
+    }
+    public void deleteKit(String name) {
+        for (Kit kit : this.kits) {
+            if (kit.name == name) this.kits.remove(kit);
+        }
+    }
     public void save() {
         for (Kit kit : this.kits) {
             kit.save(this.config);
@@ -43,7 +57,7 @@ public class KitManager implements CommandExecutor {
                 String permission = "kits.".concat(args[0]);
                 if (sender.hasPermission(permission)) {
                     for (Kit kit : this.kits) {
-                        if (kit.getPermission() == permission) {
+                        if (kit.getPermission() == permission && !kit.DISABLED) {
                             kit.appendInventory((Player)sender);
                             return true;
                         }
