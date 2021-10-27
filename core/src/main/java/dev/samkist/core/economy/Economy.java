@@ -72,7 +72,13 @@ public class Economy implements CommandExecutor {
     public void withdraw(Player p, int amount) {
         this.deposit(p, -1 * amount);
     }
-
+    public boolean attemptWithdraw(Player p, int amount) {
+        if (this.atLeast(p, amount)) {
+            this.withdraw(p, amount);
+            return true;
+        }
+        return false;
+    }
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         switch (command.getName()) {
@@ -85,7 +91,7 @@ public class Economy implements CommandExecutor {
                 this.receipt((Player) sender);
                 break;
             case "baltop":
-                //TODO: Sort players in DB by
+                //TODO: Sort players in Query
                 List<ServerPlayer> baltopPlayers = plugin.getDbManager().topPlayersByField("balance");
                 break;
             case "pay":

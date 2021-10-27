@@ -37,7 +37,11 @@ public class DBManager {
     private String connectionString;
     private Datastore datastore;
     //PLAIN OLD JAVA OBJECTS
-    private final CodecRegistry codecRegistry = org.bson.codecs.configuration.CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), org.bson.codecs.configuration.CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+    private final CodecRegistry codecRegistry = org.bson.codecs.configuration.CodecRegistries.fromRegistries
+            (
+            MongoClientSettings.getDefaultCodecRegistry(),
+            org.bson.codecs.configuration.CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())
+            );
 
     public DBManager(Core plugin, String connectionString, String database) {
         this.plugin = plugin;
