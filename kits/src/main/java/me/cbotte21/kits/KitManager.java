@@ -20,7 +20,7 @@ public class KitManager implements CommandExecutor {
         this.kits = YMLConn.getKits();
     }
     public boolean create(String name, String description) {
-        for (Kit kit : this.kits) {
+        for (Kit kit : this.kits) { //Kit already exists
             if (kit.name == name) return false;
         }
         YMLConn.save(new Kit(name, description, "kits.".concat(name)), this.config);

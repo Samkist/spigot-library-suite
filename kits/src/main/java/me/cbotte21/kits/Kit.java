@@ -8,7 +8,8 @@ import java.util.ArrayList;
 
 public class Kit {
     public String name;
-    public String description;
+    public String description = null;
+    public String giveMessage = null;
     public String permission;
     public boolean DISABLED = false;
     public int cooldown;
@@ -29,10 +30,24 @@ public class Kit {
     public void setInventory(Player p) {
         p.getInventory().clear();
         this.appendInventory(p);
+        if (this.giveMessage == null) {
+            p.sendMessage("[Kits] You have been given kit "+this.name+".");
+        } else {
+            p.sendMessage(this.giveMessage);
+        }
     }
     public void appendInventory(Player p) {
         for (ItemStack item : this.items) {
-            p.getInventory().addItem(item);
+            if (p.getInventory().firstEmpty() == -1) { //Inventory full, drop item on floor
+                p.getWorld().dropItem(p.getLocation(), item);
+            } else {
+                p.getInventory().addItem(item);
+            }
+        }
+        if (this.giveMessage == null) {
+            p.sendMessage("[Kits] You have redeemed kit "+this.name+".");
+        } else {
+            p.sendMessage(this.giveMessage);
         }
     }
     public void setDescription(String description) {
@@ -43,6 +58,21 @@ public class Kit {
     }
     public void deleteItem(ItemStack item) {
         this.items.remove(item);
+    }
+    public void setGiveMessage(String giveMessage) {
+        this.giveMessage = giveMessage;
+    }
+    public String getGiveMessage() {
+        return this.giveMessage;
+    }
+    public void disable() {
+        this.DISABLED = true;
+    }
+    public void enable() {
+        this.DISABLED = false;
+    }
+    public boolean isDisabled() {
+        return this.DISABLED;
     }
     public String getPermission() {
         return this.permission;
@@ -57,7 +87,6 @@ public class Kit {
         return this.items;
     }
     public void save(FileConfiguration config) {
-        //TODO: Save [NAME, ITEMS, PERMISSION] to config
         YMLConn.save(this, config);
     }
 }
