@@ -35,6 +35,9 @@ public class Kit {
             p.getInventory().addItem(item);
         }
     }
+    public void setDescription(String description) {
+        this.description = description;
+    }
     public void addItem(ItemStack item) {
         this.items.add(item);
     }

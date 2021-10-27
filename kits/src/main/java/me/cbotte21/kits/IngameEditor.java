@@ -1,14 +1,10 @@
 package me.cbotte21.kits;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -47,7 +43,9 @@ public class IngameEditor implements Listener {
         }
     }
     public void handleCommand(String name) { //TODO: check input from both EventHandlers
+        switch(name) {
 
+        }
     }
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent e) {

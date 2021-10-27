@@ -5,6 +5,9 @@ import dev.samkist.lobby.player.Interactions;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Lobby extends JavaPlugin {
+    /*
+    Migrate to kits with these items.
+     */
     private SpeedHacks speedHacks = new SpeedHacks();
     @Override
     public void onEnable() {
