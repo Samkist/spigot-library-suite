@@ -1,4 +1,4 @@
-package dev.samkist.lobby.items;
+package dev.samkist.lobby.player.item;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;

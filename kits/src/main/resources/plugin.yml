@@ -1,0 +1,27 @@
+main: me.cbotte21.kits.Kits
+name: Kits
+description: Custom kits for a custom server.
+version: 1.0.0
+prefix: Kits
+author: cbotte21
+load: POSTWORLD
+api-version: 1.17.1
+database: false
+commands:
+  kit redeem:
+    permission: kits.redeem
+    description: Redeem a kit
+    usage: /kit redeem <name>
+    aliases: [ kit ]
+  kits reload:
+    permission: kits.reload
+    description: Get kits from config file
+    usage: /kits reload
+  kits save:
+    permission: kits.save
+    description: Saves changes to kits.
+    usage: /kits save
+  kit create:
+    permission: kits.create
+    description: Create a new kit.
+    usage: /kit create <name> <?description>
