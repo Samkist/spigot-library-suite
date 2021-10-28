@@ -34,6 +34,13 @@ public class KitManager implements CommandExecutor {
         }
         return null;
     }
+    public ArrayList<String> getKits(Player p) {
+        ArrayList<String> myKits = new ArrayList<String>();
+        for (Kit kit : this.kits) {
+            //TODO: if p.hasPermission kit.permission... myKits.add(kit.name)
+        }
+        return myKits;
+    }
     public void deleteKit(Kit kit) {
         this.kits.remove(kit);
     }
@@ -45,6 +52,13 @@ public class KitManager implements CommandExecutor {
     public void save() {
         YMLConn.save(this.kits, config);
     }
+    public boolean redeem(Player p, String kitName) {
+        for (Kit kit : this.kits) {
+            if (kit.name == kitName && p.hasPermission("kit.".concat(kitName))) {
+                kit.append(p);
+            }
+        }
+    }
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         switch (command.getPermission()) {
@@ -52,14 +66,8 @@ public class KitManager implements CommandExecutor {
                 this.reload();
                 return true;
             case "kits.redeem":
-                String permission = "kits.".concat(args[0]);
-                if (sender.hasPermission(permission)) {
-                    for (Kit kit : this.kits) {
-                        if (kit.getPermission() == permission && !kit.DISABLED) {
-                            kit.appendInventory((Player)sender);
-                            return true;
-                        }
-                    }
+                if (this.redeem((Player)sender, args[0].toLower())) {
+                    return true;
                 }
                 break;
             case "kits.create":
@@ -70,9 +78,7 @@ public class KitManager implements CommandExecutor {
                 }
                 break;
             case "kits.save":
-                for (Kit kit : this.kits) {
-                    kit.save(this.config);
-                }
+                this.save();
                 return true;
         }
         return false;
