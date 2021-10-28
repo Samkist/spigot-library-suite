@@ -29,10 +29,6 @@ public class Economy implements CommandExecutor {
         player.sendMessage("[ECONOMY] You have $" + Math.abs(this.get(player) - this.get(prospect)) + ((this.get(player) > this.get(prospect)) ? " more " : " fewer " + "dollars!"));
     }
 
-    public boolean compare(Player player, Player prospect) {
-        return (this.get(player) > this.get(prospect));
-    }
-
     public boolean atLeast(Player p, int amount) {
         return (amount <= this.get(p));
     }

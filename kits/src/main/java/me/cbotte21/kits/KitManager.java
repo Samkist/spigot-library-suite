@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class KitManager implements CommandExecutor {
     public ArrayList<Kit> kits = new ArrayList<Kit>();
@@ -19,14 +20,17 @@ public class KitManager implements CommandExecutor {
     public void reload() {
         this.kits = YMLConn.getKits();
     }
-    public boolean create(String name, String description) {
+    public boolean create(String name, String description, String permission) {
         for (Kit kit : this.kits) { //Kit already exists
             if (kit.name == name) return false;
         }
-        YMLConn.save(new Kit(name, description, "kits.".concat(name)), this.config);
+        this.kits.add(new Kit(name, description));
         this.save();
         this.reload();
         return true;
+    }
+    public boolean create(String name, String permission) {
+        return this.create(name, "", permission);
     }
     public Kit getKit(String name) {
         for (Kit kit : this.kits) {
@@ -34,9 +38,12 @@ public class KitManager implements CommandExecutor {
         }
         return null;
     }
-    public ArrayList<String> getKits(Player p) {
+    public ArrayList<String> getMyKits(Player p) {
         ArrayList<String> myKits = new ArrayList<String>();
         for (Kit kit : this.kits) {
+            if (p.hasPermission(kit.getPermission())) {
+                myKits.add(kit.name);
+            }
             //TODO: if p.hasPermission kit.permission... myKits.add(kit.name)
         }
         return myKits;
@@ -55,9 +62,11 @@ public class KitManager implements CommandExecutor {
     public boolean redeem(Player p, String kitName) {
         for (Kit kit : this.kits) {
             if (kit.name == kitName && p.hasPermission("kit.".concat(kitName))) {
-                kit.append(p);
+                kit.appendInventory(p);
+                return true;
             }
         }
+        return false;
     }
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -66,7 +75,7 @@ public class KitManager implements CommandExecutor {
                 this.reload();
                 return true;
             case "kits.redeem":
-                if (this.redeem((Player)sender, args[0].toLower())) {
+                if (this.redeem((Player)sender, args[0].toLowerCase())) {
                     return true;
                 }
                 break;
