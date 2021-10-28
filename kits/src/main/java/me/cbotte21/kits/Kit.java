@@ -14,18 +14,20 @@ public class Kit {
     public boolean DISABLED = false;
     public int cooldown;
     private ArrayList<ItemStack> items;
-    public Kit(String name, String description, String permission) { //CREATE
+    public Kit(String name, String description, ArrayList<ItemStack> items, String permission) { //FULLY CUSTOMIZED KIT
+        this.name = name;
+        this.description = description;
+        this.items = items;
+        this.permission = permission;
+    }
+    public Kit(String name, ArrayList<ItemStack> items, String permission) { //KIT with no DESCRIPTION
         this.name = name;
         this.description = description;
         this.permission = permission;
     }
-    public Kit(String name, String permission) { //CREATE
+    public Kit(String name, String permission) { //KIT with no DESCRIPTION or ITEMS
         this.name = name;
         this.permission = permission;
-    }
-    public Kit(String name, ArrayList<ItemStack> items) { //LOAD
-        this.name = name;
-        this.items = items;
     }
     public void setInventory(Player p) {
         p.getInventory().clear();
@@ -85,8 +87,5 @@ public class Kit {
     }
     public ArrayList<ItemStack> getItems() {
         return this.items;
-    }
-    public void save(FileConfiguration config) {
-        YMLConn.save(this, config);
     }
 }

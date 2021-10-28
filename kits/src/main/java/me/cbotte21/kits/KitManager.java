@@ -43,9 +43,7 @@ public class KitManager implements CommandExecutor {
         }
     }
     public void save() {
-        for (Kit kit : this.kits) {
-            kit.save(this.config);
-        }
+        YMLConn.save(this.kits, config);
     }
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
