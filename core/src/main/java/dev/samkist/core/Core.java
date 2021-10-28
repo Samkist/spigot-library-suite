@@ -6,6 +6,7 @@ import dev.samkist.core.data.DataManager;
 import dev.samkist.core.data.database.DBManager;
 import dev.samkist.core.economy.Economy;
 import dev.samkist.core.data.local.FileManager;
+import dev.samkist.core.fun.PlayerCosmeticEvents;
 import dev.samkist.core.utils.ChatInstance;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,12 +33,13 @@ public class Core extends JavaPlugin {
 
         PlayerStateModifiers playerStateModifiers = new PlayerStateModifiers();
         GameStateModifiers gameStateModifiers = new GameStateModifiers();
+        PlayerCosmeticEvents playerCosmeticEvents = new PlayerCosmeticEvents();
         Economy economy = new Economy();
 
         this.getServer().getPluginManager().registerEvents(chatInstance, this);
         this.getServer().getPluginManager().registerEvents(playerStateModifiers, this);
         this.getServer().getPluginManager().registerEvents(gameStateModifiers, this);
-        //this.getCommand("godmode").setExecutor(godmode);
+        //this.getServer().getPluginManager().registerEvents(playerCosmeticEvents, this);
 
         this.getCommand("give").setExecutor(playerStateModifiers);
         this.getCommand("xp").setExecutor(playerStateModifiers);

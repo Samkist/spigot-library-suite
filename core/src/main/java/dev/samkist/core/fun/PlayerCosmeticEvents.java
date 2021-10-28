@@ -15,7 +15,7 @@ import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 Have not checked functionality of Listeners
  */
 
-public class PlayerEvents implements Listener {
+public class PlayerCosmeticEvents implements Listener {
     @EventHandler
     public void onSpawn(PlayerSpawnLocationEvent e) {
         if (e.getPlayer().hasPermission("vip.spawn_firework")) {
