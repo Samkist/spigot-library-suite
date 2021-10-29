@@ -27,17 +27,16 @@ public class Core extends JavaPlugin {
     public void onEnable() {
 
         fileManager.initialize();
-
         //configureDatabase();
 
         dataManager = new DataManager(fileManager, dbManager);
 
-        ChatInstance chatInstance = new ChatInstance();
-
+        //State modifiers
         PlayerStateModifiers playerStateModifiers = new PlayerStateModifiers();
         GameStateModifiers gameStateModifiers = new GameStateModifiers();
         PlayerCosmeticEvents playerCosmeticEvents = new PlayerCosmeticEvents();
         Economy economy = new Economy();
+        ChatInstance chatInstance = new ChatInstance();
 
         //Admin commands
         Cleanse cleanse = new Cleanse();
@@ -50,13 +49,14 @@ public class Core extends JavaPlugin {
         Heal heal = new Heal();
         Invsee invsee = new Invsee();
         Xp xp = new Xp();
-        //END
 
+        //Events
         this.getServer().getPluginManager().registerEvents(chatInstance, this);
         this.getServer().getPluginManager().registerEvents(playerStateModifiers, this);
         this.getServer().getPluginManager().registerEvents(gameStateModifiers, this);
         //this.getServer().getPluginManager().registerEvents(playerCosmeticEvents, this);
 
+        //Commands
         this.getCommand("give").setExecutor(give);
         this.getCommand("xp").setExecutor(xp);
         this.getCommand("feed").setExecutor(feed);
