@@ -2,6 +2,7 @@ package dev.samkist.core;
 
 import com.mongodb.MongoCredential;
 import dev.samkist.core.admin.*;
+import dev.samkist.core.api.CoreAPI;
 import dev.samkist.core.data.DataManager;
 import dev.samkist.core.data.database.DBManager;
 import dev.samkist.core.economy.Economy;
@@ -15,6 +16,7 @@ import java.util.Objects;
 
 public class Core extends JavaPlugin {
 
+    private final CoreAPI coreAPI = new CoreAPI(this);
     private final FileManager fileManager = new FileManager(this);
     private DBManager dbManager;
     private DataManager dataManager;
@@ -88,5 +90,9 @@ public class Core extends JavaPlugin {
 
             dbManager = new DBManager(this, MongoCredential.createCredential(user, database, password.toCharArray()), host, database, port);
         }
+    }
+
+    public CoreAPI api() {
+        return this.coreAPI;
     }
 }
