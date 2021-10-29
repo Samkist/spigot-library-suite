@@ -1,5 +1,5 @@
 main: dev.samkist.core.Core
-name: PluginSuite
+name: Core
 api-version: 1.17
 description: A plugin suite!
 database: true
