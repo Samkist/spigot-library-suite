@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class KitManager implements CommandExecutor {
     public ArrayList<Kit> kits = new ArrayList<Kit>();
@@ -38,27 +37,30 @@ public class KitManager implements CommandExecutor {
         }
         return null;
     }
-    public ArrayList<String> getMyKits(Player p) {
+    public ArrayList<String> getMyKits(Player p) { //Player command
         ArrayList<String> myKits = new ArrayList<String>();
         for (Kit kit : this.kits) {
             if (p.hasPermission(kit.getPermission())) {
                 myKits.add(kit.name);
             }
-            //TODO: if p.hasPermission kit.permission... myKits.add(kit.name)
         }
         return myKits;
     }
-    public void deleteKit(Kit kit) {
-        this.kits.remove(kit);
-    }
-    public void deleteKit(String name) {
+    public void deleteKit(Kit kit) { //DEV command
+        this.deleteKit(kit.name);
+    } //Admin command
+    public void deleteKit(String name) { //Admin command
         for (Kit kit : this.kits) {
-            if (kit.name == name) this.kits.remove(kit);
+            if (kit.name == name) {
+                this.kits.remove(kit);
+                this.save();
+                this.reload();
+            }
         }
     }
     public void save() {
         YMLConn.save(this.kits, config);
-    }
+    } //DEV COMMAND
     public boolean redeem(Player p, String kitName) {
         for (Kit kit : this.kits) {
             if (kit.name == kitName && p.hasPermission("kit.".concat(kitName))) {
