@@ -83,7 +83,7 @@ public class KitManager implements CommandExecutor {
                 break;
             case "kits.create":
                 if (args.length == 2) {
-                    this.create(args[1].toLowerCase(), "Message placeholder");
+                    this.create(args[1].toLowerCase(), args[2]);
                 } else {
                     this.create(args[1].toLowerCase(), "");
                 }
