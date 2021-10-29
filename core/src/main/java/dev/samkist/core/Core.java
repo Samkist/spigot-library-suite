@@ -2,6 +2,7 @@ package dev.samkist.core;
 
 import com.mongodb.MongoCredential;
 import dev.samkist.core.admin.*;
+import dev.samkist.core.admin.commands.*;
 import dev.samkist.core.api.CoreAPI;
 import dev.samkist.core.data.DataManager;
 import dev.samkist.core.data.database.DBManager;
@@ -38,21 +39,34 @@ public class Core extends JavaPlugin {
         PlayerCosmeticEvents playerCosmeticEvents = new PlayerCosmeticEvents();
         Economy economy = new Economy();
 
+        //Admin commands
+        Cleanse cleanse = new Cleanse();
+        Enderchest enderchest = new Enderchest();
+        Feed feed = new Feed();
+        Fly fly = new Fly(playerStateModifiers);
+        Gamemode gameMode = new Gamemode();
+        Give give = new Give();
+        Godmode godmode = new Godmode(playerStateModifiers);
+        Heal heal = new Heal();
+        Invsee invsee = new Invsee();
+        Xp xp = new Xp();
+        //END
+
         this.getServer().getPluginManager().registerEvents(chatInstance, this);
         this.getServer().getPluginManager().registerEvents(playerStateModifiers, this);
         this.getServer().getPluginManager().registerEvents(gameStateModifiers, this);
         //this.getServer().getPluginManager().registerEvents(playerCosmeticEvents, this);
 
-        this.getCommand("give").setExecutor(playerStateModifiers);
-        this.getCommand("xp").setExecutor(playerStateModifiers);
-        this.getCommand("feed").setExecutor(playerStateModifiers);
-        this.getCommand("heal").setExecutor(playerStateModifiers);
-        this.getCommand("cleanse").setExecutor(playerStateModifiers);
-        this.getCommand("gamemode").setExecutor(playerStateModifiers);
-        this.getCommand("enderchest").setExecutor(playerStateModifiers);
-        this.getCommand("inventorysee").setExecutor(playerStateModifiers);
-        this.getCommand("fly").setExecutor(playerStateModifiers);
-        this.getCommand("godmode").setExecutor(playerStateModifiers);
+        this.getCommand("give").setExecutor(give);
+        this.getCommand("xp").setExecutor(xp);
+        this.getCommand("feed").setExecutor(feed);
+        this.getCommand("heal").setExecutor(heal);
+        this.getCommand("cleanse").setExecutor(cleanse);
+        this.getCommand("gamemode").setExecutor(gameMode);
+        this.getCommand("enderchest").setExecutor(enderchest);
+        this.getCommand("inventorysee").setExecutor(invsee);
+        this.getCommand("fly").setExecutor(fly);
+        this.getCommand("godmode").setExecutor(godmode);
         this.getCommand("balance").setExecutor(economy);
         this.getCommand("baltop").setExecutor(economy);
         this.getCommand("pay").setExecutor(economy);
