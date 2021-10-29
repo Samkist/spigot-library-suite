@@ -77,20 +77,22 @@ public class KitManager implements CommandExecutor {
                 this.reload();
                 return true;
             case "kits.redeem":
-                if (this.redeem((Player)sender, args[0].toLowerCase())) {
+                if (this.redeem((Player)sender, args[1].toLowerCase())) {
                     return true;
                 }
                 break;
             case "kits.create":
                 if (args.length == 2) {
-                    this.create(args[0].toLowerCase(), args[1]);
+                    this.create(args[1].toLowerCase(), "Message placeholder");
                 } else {
-                    this.create(args[0].toLowerCase(), "");
+                    this.create(args[1].toLowerCase(), "");
                 }
                 break;
             case "kits.save":
                 this.save();
                 return true;
+            case "kits.delete":
+                this.deleteKit(args[1].toLowerCase());
         }
         return false;
     }

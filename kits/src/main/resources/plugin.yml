@@ -25,3 +25,7 @@ commands:
     permission: kits.create
     description: Create a new kit.
     usage: /kit create <name> <?description>
+  kit delete:
+    permissio: kits.delete
+    description: Delete a kit.
+    usage: /kit delete <name>
