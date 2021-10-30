@@ -4,6 +4,7 @@ description: Custom kits for a custom server.
 version: 1.0.0
 prefix: Kits
 author: cbotte21
+depend: [ Core ]
 load: POSTWORLD
 api-version: 1.17.1
 database: false

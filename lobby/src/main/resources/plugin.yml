@@ -3,6 +3,7 @@ name: Lobby
 api-version: 1.17
 description: Server hub components
 database: true
+depend: [ Core ]
 authors:
   - cbotte21
   - Samkist
