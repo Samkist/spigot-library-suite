@@ -21,6 +21,7 @@ public class Kits extends JavaPlugin {
         this.getCommand("kit reload").setExecutor(kitManager);
         this.getCommand("kit redeem").setExecutor(kitManager);
         this.getCommand("kit save").setExecutor(kitManager);
+        this.getCommand("kit delete").setExecutor(kitManager);
         this.getCommand("kit create").setExecutor(kitManager);
         this.getConfig().getConfigurationSection("kit").getValues(false);
         this.config.options().copyDefaults(true);

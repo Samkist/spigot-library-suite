@@ -22,5 +22,4 @@ public class YMLConn {
         Bukkit.getConsoleSender().sendMessage("[Kits] Kit saved! [ "+kit.getName()+" ]");
         */
     }
-         */
 }

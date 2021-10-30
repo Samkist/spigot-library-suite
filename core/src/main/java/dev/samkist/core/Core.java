@@ -2,6 +2,8 @@ package dev.samkist.core;
 
 import com.mongodb.MongoCredential;
 import dev.samkist.core.admin.*;
+import dev.samkist.core.admin.commands.player.*;
+import dev.samkist.core.admin.commands.world.Day;
 import dev.samkist.core.api.CoreAPI;
 import dev.samkist.core.data.DataManager;
 import dev.samkist.core.data.database.DBManager;
@@ -12,6 +14,7 @@ import dev.samkist.core.utils.ChatInstance;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Core extends JavaPlugin {
@@ -26,38 +29,56 @@ public class Core extends JavaPlugin {
     public void onEnable() {
 
         fileManager.initialize();
-
         configureDatabase();
 
         dataManager = new DataManager(fileManager, dbManager);
 
-        ChatInstance chatInstance = new ChatInstance();
-
+        //State modifiers initializers
         PlayerStateModifiers playerStateModifiers = new PlayerStateModifiers();
         GameStateModifiers gameStateModifiers = new GameStateModifiers();
         PlayerCosmeticEvents playerCosmeticEvents = new PlayerCosmeticEvents();
         Economy economy = new Economy();
+        ChatInstance chatInstance = new ChatInstance();
 
+        //Admin commands
+        //Player state
+        Cleanse cleanse = new Cleanse();
+        Enderchest enderchest = new Enderchest();
+        Feed feed = new Feed();
+        Fly fly = new Fly(playerStateModifiers);
+        Gamemode gameMode = new Gamemode();
+        Give give = new Give();
+        Godmode godmode = new Godmode(playerStateModifiers);
+        Heal heal = new Heal();
+        Invsee invsee = new Invsee();
+        Xp xp = new Xp();
+        //Game state
+        Day day = new Day();
+
+        //Events
         this.getServer().getPluginManager().registerEvents(chatInstance, this);
         this.getServer().getPluginManager().registerEvents(playerStateModifiers, this);
         this.getServer().getPluginManager().registerEvents(gameStateModifiers, this);
         //this.getServer().getPluginManager().registerEvents(playerCosmeticEvents, this);
 
-        this.getCommand("give").setExecutor(playerStateModifiers);
-        this.getCommand("xp").setExecutor(playerStateModifiers);
-        this.getCommand("feed").setExecutor(playerStateModifiers);
-        this.getCommand("heal").setExecutor(playerStateModifiers);
-        this.getCommand("cleanse").setExecutor(playerStateModifiers);
-        this.getCommand("gamemode").setExecutor(playerStateModifiers);
-        this.getCommand("enderchest").setExecutor(playerStateModifiers);
-        this.getCommand("inventorysee").setExecutor(playerStateModifiers);
-        this.getCommand("fly").setExecutor(playerStateModifiers);
-        this.getCommand("godmode").setExecutor(playerStateModifiers);
+        //Commands
+        //Player State
+        this.getCommand("give").setExecutor(give);
+        this.getCommand("xp").setExecutor(xp);
+        this.getCommand("feed").setExecutor(feed);
+        this.getCommand("heal").setExecutor(heal);
+        this.getCommand("cleanse").setExecutor(cleanse);
+        this.getCommand("gamemode").setExecutor(gameMode);
+        this.getCommand("enderchest").setExecutor(enderchest);
+        this.getCommand("inventorysee").setExecutor(invsee);
+        this.getCommand("fly").setExecutor(fly);
+        this.getCommand("godmode").setExecutor(godmode);
         this.getCommand("balance").setExecutor(economy);
         this.getCommand("baltop").setExecutor(economy);
         this.getCommand("pay").setExecutor(economy);
         this.getCommand("eco").setExecutor(economy);
-        this.getCommand("ban").setExecutor(gameStateModifiers);
+        //Game State
+        this.getCommand("day").setExecutor(day);
     }
 
     @Override
