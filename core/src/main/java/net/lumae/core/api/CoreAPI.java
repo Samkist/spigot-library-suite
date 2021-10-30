@@ -2,6 +2,7 @@ package net.lumae.core.api;
 
 import net.lumae.core.Core;
 import net.lumae.core.data.entities.LumaePlayer;
+import net.lumae.core.economy.Economy;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.units.qual.C;
