@@ -2,7 +2,8 @@ package dev.samkist.core;
 
 import com.mongodb.MongoCredential;
 import dev.samkist.core.admin.*;
-import dev.samkist.core.admin.commands.*;
+import dev.samkist.core.admin.commands.player.*;
+import dev.samkist.core.admin.commands.world.Day;
 import dev.samkist.core.api.CoreAPI;
 import dev.samkist.core.data.DataManager;
 import dev.samkist.core.data.database.DBManager;
@@ -39,6 +40,7 @@ public class Core extends JavaPlugin {
         ChatInstance chatInstance = new ChatInstance();
 
         //Admin commands
+        //Player state
         Cleanse cleanse = new Cleanse();
         Enderchest enderchest = new Enderchest();
         Feed feed = new Feed();
@@ -49,6 +51,8 @@ public class Core extends JavaPlugin {
         Heal heal = new Heal();
         Invsee invsee = new Invsee();
         Xp xp = new Xp();
+        //Game state
+        Day day = new Day();
 
         //Events
         this.getServer().getPluginManager().registerEvents(chatInstance, this);
@@ -57,6 +61,7 @@ public class Core extends JavaPlugin {
         //this.getServer().getPluginManager().registerEvents(playerCosmeticEvents, this);
 
         //Commands
+        //Player State
         this.getCommand("give").setExecutor(give);
         this.getCommand("xp").setExecutor(xp);
         this.getCommand("feed").setExecutor(feed);
@@ -71,7 +76,8 @@ public class Core extends JavaPlugin {
         this.getCommand("baltop").setExecutor(economy);
         this.getCommand("pay").setExecutor(economy);
         this.getCommand("eco").setExecutor(economy);
-        this.getCommand("ban").setExecutor(gameStateModifiers);
+        //Game State
+        this.getCommand("day").setExecutor(day);
     }
 
     @Override

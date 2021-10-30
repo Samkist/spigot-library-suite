@@ -1,4 +1,4 @@
-package dev.samkist.core.admin.commands;
+package dev.samkist.core.admin.commands.player;
 
 import dev.samkist.core.admin.PlayerStateModifiers;
 import org.bukkit.Bukkit;
@@ -8,13 +8,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class Feed implements CommandExecutor {
+public class Enderchest implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length == 1) {
-            PlayerStateModifiers.setFoodLevel(Bukkit.getPlayer(args[0]), 20);
+            PlayerStateModifiers.openInventory((Player)sender, Bukkit.getPlayer(args[0]));
+            ((Player)sender).sendMessage("[PluginSuite] You have opened "+Bukkit.getPlayer(args[0]).getName()+"'s enderchest!");
         } else {
-            PlayerStateModifiers.setFoodLevel((Player) sender, 20);
+            PlayerStateModifiers.openEnderchest((Player)sender);
+            ((Player)sender).sendMessage("[PluginSuite] Enderchest opened!");
         }
         return true;
     }

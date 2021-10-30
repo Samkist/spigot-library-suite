@@ -1,4 +1,4 @@
-package dev.samkist.core.admin.commands;
+package dev.samkist.core.admin.commands.player;
 
 import dev.samkist.core.admin.PlayerStateModifiers;
 import org.bukkit.Bukkit;
