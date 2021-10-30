@@ -1,10 +1,7 @@
 package net.lumae.core.data.entities;
 
-import dev.morphia.annotations.Id;
-
 public abstract class Format {
 
-    @Id
     String name;
     String permission;
     String messageFormat;

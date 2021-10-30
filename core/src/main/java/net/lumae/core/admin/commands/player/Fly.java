@@ -1,6 +1,7 @@
 package net.lumae.core.admin.commands.player;
 
 import net.lumae.core.admin.PlayerStateModifiers;
+import net.lumae.core.admin.commands.LumaeExecutor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -8,8 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class Fly implements CommandExecutor {
-    public String command = "fly";
+public class Fly implements LumaeExecutor {
     PlayerStateModifiers state;
     public Fly(PlayerStateModifiers state) {
         this.state = state;
@@ -33,5 +33,10 @@ public class Fly implements CommandExecutor {
             PlayerStateModifiers.toggleFlight((Player)sender);
         }
         return true;
+    }
+
+    @Override
+    public String commandName() {
+        return "fly";
     }
 }

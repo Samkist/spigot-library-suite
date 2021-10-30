@@ -47,5 +47,5 @@ shadowJar {
     relocate("org.slf4j", "net.lumae.slf4j")
     relocate("ch.qos.logback", "net.lumae.logback")
     relocate("org.bson", "net.lumae.bson")
-    baseName "LumaeLib"
+    baseName "Core"
 }

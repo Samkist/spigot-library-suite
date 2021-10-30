@@ -88,11 +88,14 @@ public class DBManager {
 
     public void saveAllPlayers(Map<UUID, LumaePlayer> serverPlayerMap) {
         List<ReplaceOneModel<LumaePlayer>> replaceModels =
-                serverPlayerMap.values().stream().map(
-                        player -> new ReplaceOneModel(
-                                eq("uuid", player.getUuid()),
-                                player,
-                                replaceOptions)).collect(Collectors.toList());
+                new ArrayList<>();
+        for (LumaePlayer player : serverPlayerMap.values()) {
+            ReplaceOneModel<LumaePlayer> uuid = new ReplaceOneModel<>(
+                    eq("uuid", player.getUuid()),
+                    player,
+                    replaceOptions);
+            replaceModels.add(uuid);
+        }
         this.players.bulkWrite(replaceModels);
     }
 

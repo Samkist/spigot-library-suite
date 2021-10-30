@@ -1,6 +1,7 @@
 package net.lumae.core.admin.commands.player;
 
 import net.lumae.core.admin.PlayerStateModifiers;
+import net.lumae.core.admin.commands.LumaeExecutor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,8 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class Godmode implements CommandExecutor, Listener {
-    public String command = "godmode";
+public class Godmode implements LumaeExecutor, Listener {
     PlayerStateModifiers state;
     public Godmode(PlayerStateModifiers state) {
         this.state = state;
@@ -40,5 +40,10 @@ public class Godmode implements CommandExecutor, Listener {
             this.state.toggleGodmode((Player)sender);
         }
         return true;
+    }
+
+    @Override
+    public String commandName() {
+        return "godmode";
     }
 }

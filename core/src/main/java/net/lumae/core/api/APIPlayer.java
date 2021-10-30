@@ -10,7 +10,7 @@ import java.util.UUID;
 public class APIPlayer {
     private final LumaePlayer lumaePlayer;
     private final Player player;
-    private static final Core core = JavaPlugin.getPlugin(Core.class);
+    private final Core core = JavaPlugin.getPlugin(Core.class);
 
     protected APIPlayer(LumaePlayer lumaePlayer) {
         this.lumaePlayer = lumaePlayer;

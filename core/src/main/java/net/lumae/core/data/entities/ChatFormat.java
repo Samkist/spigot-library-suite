@@ -1,8 +1,5 @@
 package net.lumae.core.data.entities;
 
-import dev.morphia.annotations.Entity;
-
-@Entity(value = "chatFormats", useDiscriminator = false)
 public class ChatFormat extends Format {
 
     public ChatFormat() {

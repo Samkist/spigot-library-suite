@@ -53,7 +53,7 @@ public class FileManager {
         // Check if YML files exist, and load them
 
 
-        for(String jsonFile : jsonFiles) {
+       /* for(String jsonFile : jsonFiles) {
             final Path path = Paths.get(plugin.getDataFolder().toPath().resolve("data/" + jsonFile).toString());
             if(Files.notExists(path)) {
                 try {
@@ -63,7 +63,7 @@ public class FileManager {
                     plugin.getLogger().warning("FAILED TO CREATE " + jsonFile);
                 }
             }
-        }
+        }*/
     }
 
     public void loadYaml(String ymlFile) {

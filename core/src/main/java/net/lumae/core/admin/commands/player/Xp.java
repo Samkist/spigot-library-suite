@@ -1,14 +1,14 @@
 package net.lumae.core.admin.commands.player;
 
 import net.lumae.core.admin.PlayerStateModifiers;
+import net.lumae.core.admin.commands.LumaeExecutor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-public class Xp implements CommandExecutor {
-    public String command = "xp";
+public class Xp implements LumaeExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length != 2 || args.length != 3) return false;
@@ -26,5 +26,10 @@ public class Xp implements CommandExecutor {
                 break;
         }
         return true;
+    }
+
+    @Override
+    public String commandName() {
+        return "xp";
     }
 }

@@ -10,25 +10,27 @@ import java.util.Objects;
 
 public class CoreAPI {
 
-    private static final Core core = JavaPlugin.getPlugin(Core.class);
     private static CoreAPI coreAPI = null;
+    private Core core;
 
-    private CoreAPI() {
+    private CoreAPI(Core core) {
+        this.core = core;
        coreAPI = this;
     }
 
     public static CoreAPI getInstance() {
-        if(Objects.isNull(coreAPI)) {
-            new CoreAPI();
-        }
         return coreAPI;
     }
 
-    public APIPlayer getLumaePlayer(Player player) {
+    public static CoreAPI initialize(Core core) {
+        return Objects.isNull(coreAPI) ? new CoreAPI(core) : null;
+    }
+
+    public APIPlayer getAPIPlayer(Player player) {
         return new APIPlayer(player);
     }
 
-    public APIPlayer getLumaePlayer(LumaePlayer player) {
+    public APIPlayer getAPIPlayer(LumaePlayer player) {
         return new APIPlayer(player);
     }
 
