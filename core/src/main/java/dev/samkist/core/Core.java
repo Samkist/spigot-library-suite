@@ -32,7 +32,7 @@ public class Core extends JavaPlugin {
 
         dataManager = new DataManager(fileManager, dbManager);
 
-        //State modifiers
+        //State modifiers initializers
         PlayerStateModifiers playerStateModifiers = new PlayerStateModifiers();
         GameStateModifiers gameStateModifiers = new GameStateModifiers();
         PlayerCosmeticEvents playerCosmeticEvents = new PlayerCosmeticEvents();
