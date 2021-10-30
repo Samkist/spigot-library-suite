@@ -24,6 +24,6 @@ public class Cleanse implements LumaeExecutor {
 
     @Override
     public String commandName() {
-        return "clenase";
+        return "cleanse";
     }
 }
