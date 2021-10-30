@@ -26,7 +26,6 @@ public class FileManager {
 
     //Pertinent files that belong in the plugin folder
     private final List<String> ymlFiles = List.of("config.yml");
-    private final List<String> jsonFiles = List.of("player-data.json");
     private final String[] directories = {};
 
     //Initializes all files, checking if they are there
@@ -64,18 +63,6 @@ public class FileManager {
             }
 
             configFiles.put(ymlFile, YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), ymlFile)));
-        }
-
-        for(String jsonFile : jsonFiles) {
-            final Path path = Paths.get(plugin.getDataFolder().toPath().resolve("data/" + jsonFile).toString());
-            if(Files.notExists(path)) {
-                try {
-                    Files.copy(getClass().getClassLoader().getResourceAsStream("data/" + jsonFile), path);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    plugin.getLogger().warning("FAILED TO CREATE " + jsonFile);
-                }
-            }
         }
     }
 

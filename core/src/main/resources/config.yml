@@ -7,12 +7,12 @@
 # |                                                                                              | #
 # +----------------------------------------------------------------------------------------------+ #
 database:
-  user: 'root'
-  name: 'minecraft' # NEEDS DB NAME
-  password: 'asdfasdf1'
-  host: 'cluster0.btzdz.mongodb.net'
-  port: '27017'
-  connectionString: 'mongodb+srv://root:asdfasdf1@cluster0.btzdz.mongodb.net/minecraft?retryWrites=true&w=majority'
+  user: ''#'root'
+  name: 'lumae' # NEEDS DB NAME
+  password: ''#'asdfasdf1'
+  host: ''#'cluster0.btzdz.mongodb.net'
+  port: ''#'#27017'
+  connectionString: 'mongodb+srv://root:asdfasdf1@cluster0.btzdz.mongodb.net/lumae?retryWrites=true&w=majority'
   # +----------------------------------------------------------------------------------------------+ #
   # |                                                                                              | #
   # |                                      DATABASE DEFAULTS                                       | #

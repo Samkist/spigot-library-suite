@@ -1,12 +1,7 @@
 package dev.samkist.core.data.database;
 
 
-import com.mongodb.ConnectionString;
-import com.mongodb.MongoClientSettings;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
+import com.mongodb.*;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import dev.morphia.aggregation.experimental.Aggregation;
@@ -26,6 +21,9 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
+import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+
 public class DBManager {
     private final Core plugin;
     private final MongoCredential credential;
@@ -35,13 +33,11 @@ public class DBManager {
     private boolean init;
     private MongoClient mongoClient;
     private String connectionString;
-    private Datastore datastore;
+    private Collection<ChatFormat> chatFormats;
+    private Collection<JoinLeaveFormat> joinLeaveFormats;
+    private Collection<ServerPlayer> serverPlayers;
     //PLAIN OLD JAVA OBJECTS
-    private final CodecRegistry codecRegistry = org.bson.codecs.configuration.CodecRegistries.fromRegistries
-            (
-            MongoClientSettings.getDefaultCodecRegistry(),
-            org.bson.codecs.configuration.CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())
-            );
+    final CodecRegistry codecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(), fromProviders(PojoCodecProvider.builder().automatic(true).build()));
 
     public DBManager(Core plugin, String connectionString, String database) {
         this.plugin = plugin;
@@ -50,6 +46,7 @@ public class DBManager {
         this.host = null;
         this.database = database;
         this.port = 0;
+        initialize();
     }
 
     public DBManager(Core plugin, MongoCredential credential, String host, String database, Integer port) {
@@ -58,26 +55,27 @@ public class DBManager {
         this.host = host;
         this.database = database;
         this.port = port;
+        initialize();
     }
 
     public void initialize() {
         if(init) return;
         if(Objects.nonNull(connectionString)) {
-            this.mongoClient = MongoClients.create(MongoClientSettings.builder()
-                    .codecRegistry(codecRegistry)
-                    .applyConnectionString(new ConnectionString(connectionString))
-                    .build());
+            MongoClientOptions.Builder mongoClientOptions = MongoClientOptions.builder()
+                    .codecRegistry(codecRegistry);
+            MongoClientURI uri = new MongoClientURI(connectionString, mongoClientOptions);
+            this.mongoClient = new MongoClient(uri);
 
         } else {
-            this.mongoClient = MongoClients.create(
+           /* this.mongoClient = MongoClients.create(
                     MongoClientSettings.builder()
                             .applyToClusterSettings(builder ->
                                     builder.hosts(Arrays.asList(new ServerAddress(host, port))))
                             .codecRegistry(codecRegistry)
                             .credential(credential)
-                            .build());
+                            .build());*/
         }
-        datastore = Morphia.createDatastore(mongoClient, database);
+        datastore =
         init = true;
     }
 

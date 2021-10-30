@@ -29,7 +29,7 @@ public class Core extends JavaPlugin {
     public void onEnable() {
 
         fileManager.initialize();
-        //configureDatabase();
+        configureDatabase();
 
         dataManager = new DataManager(fileManager, dbManager);
 
