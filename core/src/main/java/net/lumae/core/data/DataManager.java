@@ -15,14 +15,14 @@ public class DataManager {
     private static final Core plugin = JavaPlugin.getPlugin(Core.class);
     private final FileManager fileManager;
     private final DBManager dbManager;
-    private final Map<UUID, LumaePlayer> ServerPlayerMap;
+    private final Map<UUID, LumaePlayer> players;
     //private final Map<String, Message> pluginMessages;
     private final List<ChatFormat> chatFormats;
     private final List<JoinLeaveFormat> joinLeaveFormats;
     public DataManager(FileManager fileManager, DBManager dbManager) {
         this.fileManager = fileManager;
         this.dbManager = dbManager;
-        this.ServerPlayerMap = new HashMap<>();
+        this.players = new HashMap<>();
         //this.pluginMessages = new HashMap<>();
         this.chatFormats = loadChatFormats();
         this.joinLeaveFormats = loadJoinLeaveFormats();
@@ -38,8 +38,16 @@ public class DataManager {
         dbManager.saveAllPlayers(serverPlayer);
     }
 
-    public Optional<LumaePlayer> saveServerPlayer(LumaePlayer lumaePlayer) {
+    public Optional<LumaePlayer> saveLumaePlayer(LumaePlayer lumaePlayer) {
         return dbManager.saveLumaePlayer(lumaePlayer);
+    }
+
+    public Optional<LumaePlayer> saveLumaePlayer(Player player) {
+        UUID uuid = player.getUniqueId();
+        if(players.containsKey(uuid)) {
+            return loadServerPlayer(player);
+        }
+        return dbManager.saveLumaePlayer(players.get(uuid));
     }
 
     public Optional<LumaePlayer> topPlayerByField(String field) {
@@ -47,19 +55,23 @@ public class DataManager {
     }
 
     public Optional<LumaePlayer> loadServerPlayer(Player player) {
-        return dbManager.loadServerPlayer(player);
+        Optional<LumaePlayer> lumaePlayer = dbManager.loadLumaePlayer(player);
+
+        lumaePlayer.ifPresent(p -> players.put(player.getUniqueId(), p));
+
+        return lumaePlayer;
     }
 
     public Optional<LumaePlayer> initializeServerPlayer(Player player) {
-        return dbManager.initializeServerPlayer(player);
+        return dbManager.initializeLumaePlayer(player);
     }
 
     public LumaePlayer fetchLumaePlayer(Player player) {
-        return ServerPlayerMap.get(player.getUniqueId());
+        return players.get(player.getUniqueId());
     }
 
     public LumaePlayer fetchLumaePlayer(UUID uuid) {
-        return ServerPlayerMap.get(uuid);
+        return players.get(uuid);
     }
 
     public List<ChatFormat> loadChatFormats() {
@@ -82,8 +94,8 @@ public class DataManager {
         return dbManager;
     }
 
-    public Map<UUID, LumaePlayer> getServerPlayerMap() {
-        return ServerPlayerMap;
+    public Map<UUID, LumaePlayer> getPlayers() {
+        return players;
     }
 
     /*public Map<String, Message> getPluginMessages() {

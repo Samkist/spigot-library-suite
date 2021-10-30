@@ -22,7 +22,6 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bukkit.entity.Player;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
@@ -121,18 +120,18 @@ public class DBManager {
                 Filters.eq("uuid", serverPlayer.getUuid()), serverPlayer, replaceOptions).wasAcknowledged() ? Optional.of(serverPlayer) : Optional.empty();
     }
 
-    public Optional<LumaePlayer> initializeServerPlayer(Player player) {
+    public Optional<LumaePlayer> initializeLumaePlayer(Player player) {
         if (!this.init)
             return Optional.empty();
         LumaePlayer data = new LumaePlayer(player);
         return this.players.insertOne(data).wasAcknowledged() ? Optional.of(data) : Optional.empty();
     }
 
-    public Optional<LumaePlayer> loadServerPlayer(Player player) {
+    public Optional<LumaePlayer> loadLumaePlayer(Player player) {
         if (!this.init)
             return Optional.empty();
         LumaePlayer serverPlayer = players.find(eq("uuid", player.getUniqueId().toString())).first();
-        return Objects.nonNull(serverPlayer) ? Optional.of(serverPlayer) : initializeServerPlayer(player);
+        return Objects.nonNull(serverPlayer) ? Optional.of(serverPlayer) : initializeLumaePlayer(player);
     }
 
     public Optional<ChatFormat> initializeChatFormats(ChatFormat chatFormat) {
