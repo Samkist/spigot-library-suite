@@ -13,17 +13,13 @@ public class PlayerDataListener implements Listener {
     private final Core core = JavaPlugin.getPlugin(Core.class);
     private final DataManager dataManager = core.getDataManager();
 
-    public PlayerDataListener() {
-        ;
-    }
-
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        dataManager.loadServerPlayer(event.getPlayer());
+        dataManager.login(event.getPlayer());
     }
 
     @EventHandler
     public void onLeave(PlayerQuitEvent event) {
-        dataManager.saveLumaePlayer(event.getPlayer());
+        dataManager.loqout(event.getPlayer());
     }
 }

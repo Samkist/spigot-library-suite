@@ -56,9 +56,13 @@ public class Core extends JavaPlugin {
         GameStateModifiers gameStateModifiers = new GameStateModifiers();
         PlayerCosmeticEvents playerCosmeticEvents = new PlayerCosmeticEvents();
         ChatInstance chatInstance = new ChatInstance();
+        EconomyCommand economyCommand = new EconomyCommand(economy);
+        List<String> economyCommands = List.of("balanace", "baltop", "pay", "economy");
+
+        economyCommands.forEach(name -> getCommand(name).setExecutor(economyCommand));
 
         //Command executors
-        List<LumaeExecutor> commands = Arrays.asList(new EconomyCommand(economy), new Cleanse(), new Enderchest(),
+        List<LumaeExecutor> commands = Arrays.asList(new Cleanse(), new Enderchest(),
                 new Feed(), new Fly(playerStateModifiers), new Gamemode(), new Give(), new Godmode(playerStateModifiers),
                 new Heal(), new Invsee(), new Xp(), new Day());
 

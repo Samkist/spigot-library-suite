@@ -45,9 +45,19 @@ public class DataManager {
     public Optional<LumaePlayer> saveLumaePlayer(Player player) {
         UUID uuid = player.getUniqueId();
         if(players.containsKey(uuid)) {
-            return loadServerPlayer(player);
+            return saveLumaePlayer(players.get(uuid));
         }
         return dbManager.saveLumaePlayer(players.get(uuid));
+    }
+
+    public Optional<LumaePlayer> login(Player player) {
+        return loadServerPlayer(player);
+    }
+
+    public Optional<LumaePlayer> loqout(Player player) {
+        Optional<LumaePlayer> lumaePlayer = saveLumaePlayer(player);
+        lumaePlayer.ifPresent(p -> players.remove(player.getUniqueId()));
+        return lumaePlayer;
     }
 
     public Optional<LumaePlayer> topPlayerByField(String field) {

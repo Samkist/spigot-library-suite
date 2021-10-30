@@ -13,11 +13,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class EconomyCommand implements LumaeExecutor {
 
-    private final Core plugin = JavaPlugin.getPlugin(Core.class);
+    private final Core core = JavaPlugin.getPlugin(Core.class);
     private final Economy economy;
 
     public EconomyCommand(Economy economy) {
@@ -25,11 +26,12 @@ public class EconomyCommand implements LumaeExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] argsArray) {
+        List<String> args = Arrays.asList(argsArray);
         switch (command.getName()) {
             case "balance":
-                if (args.length == 1) {
-                    economy.getOtherReceipt((Player) sender, Bukkit.getPlayer(args[0]));
+                if (args.size() == 1) {
+                    economy.getOtherReceipt((Player) sender, Bukkit.getPlayer(args.get(0)));
                     break;
                 }
                 if (!(sender instanceof Player)) return false;
@@ -37,22 +39,22 @@ public class EconomyCommand implements LumaeExecutor {
                 break;
             case "baltop":
                 //TODO: Sort players in Query
-                List<LumaePlayer> baltopPlayers = plugin.getDbManager().topPlayersByField("balance");
+                List<LumaePlayer> baltopPlayers = core.getDbManager().topPlayersByField("balance");
                 break;
             case "pay":
-                if (!economy.transfer((Player) sender, Bukkit.getPlayer(args[0]), Integer.valueOf(args[1]))) return false;
+                if (!economy.transfer((Player) sender, Bukkit.getPlayer(args.get(0)), Integer.valueOf(args.get(1)))) return false;
                 break;
-            case "eco":
-                Player p = Bukkit.getPlayer(args[1]);
-                int amount = Integer.valueOf(args[2]);
-                if (args[0].equalsIgnoreCase("set")) {
+            case "economy":
+                Player p = Bukkit.getPlayer(args.get(0));
+                int amount = Integer.valueOf(args.get(2));
+                if (args.get(1).equalsIgnoreCase("set")) {
                     economy.set(p, amount);
-                } else if (args[0].equalsIgnoreCase("deposit")) {
+                } else if (args.get(1).equalsIgnoreCase("deposit")) {
                     economy.deposit(p, amount);
-                } else if (args[0].equalsIgnoreCase("withdraw")) {
+                } else if (args.get(1).equalsIgnoreCase("withdraw")) {
                     economy.withdraw(p, amount);
-                } else if (args[0].equalsIgnoreCase("compare")) {
-                    economy.compareReceipt((Player) sender, Bukkit.getPlayer(args[0]));
+                } else if (args.get(1).equalsIgnoreCase("compare")) {
+                    economy.compareReceipt((Player) sender, Bukkit.getPlayer(args.get(0)));
                 } else {
                     return false;
                 }
@@ -63,6 +65,6 @@ public class EconomyCommand implements LumaeExecutor {
 
     @Override
     public String commandName() {
-        return "eco";
+        return "economy";
     }
 }
