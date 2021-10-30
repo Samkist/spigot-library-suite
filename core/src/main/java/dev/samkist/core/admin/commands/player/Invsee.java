@@ -14,7 +14,7 @@ public class Invsee implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length != 1) return false;
         PlayerStateModifiers.openInventory((Player)sender, Bukkit.getPlayer(args[0]));
-        ((Player)sender).sendMessage("[PluginSuite] You have opened "+Bukkit.getPlayer(args[0]).getName()+"'s inventory!");
+        ((Player)sender).sendMessage("[LunaeMC] You have opened "+Bukkit.getPlayer(args[0]).getName()+"'s inventory!");
         return true;
     }
 }

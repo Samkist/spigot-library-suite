@@ -27,7 +27,7 @@ public class Gamemode implements CommandExecutor {
         } else {
             PlayerStateModifiers.changeGamemode((Player) sender);
         }
-        sender.sendMessage("[PluginSuite] Gamemode set!");
+        sender.sendMessage("[LunaeMC] Gamemode set!");
         return true;
     }
 }
