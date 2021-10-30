@@ -1,5 +1,8 @@
 package me.cbotte21.kits;
 
+import net.lumae.core.Core;
+import net.lumae.core.api.APIFileManager;
+import net.lumae.core.api.CoreAPI;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,7 +17,9 @@ TODO:
  */
 
 public class Kits extends JavaPlugin {
-    FileConfiguration config = getConfig();
+    private CoreAPI coreApi = JavaPlugin.getPlugin(Core.class).api();
+    private APIFileManager fileManager = coreApi.getFileManagerAPI();
+    private FileConfiguration config = fileManager.getConfig("kits.yml");
     @Override
     public void onEnable() {
         KitManager kitManager = new KitManager(config);
@@ -23,9 +28,9 @@ public class Kits extends JavaPlugin {
         this.getCommand("kit save").setExecutor(kitManager);
         this.getCommand("kit delete").setExecutor(kitManager);
         this.getCommand("kit create").setExecutor(kitManager);
-        this.getConfig().getConfigurationSection("kit").getValues(false);
-        this.config.options().copyDefaults(true);
-        this.saveConfig();
+        this.config.getConfigurationSection("kit").getValues(false);
+        this.fileManager.saveConfig("kits.yml");
+
     }
     @Override
     public void onDisable() {

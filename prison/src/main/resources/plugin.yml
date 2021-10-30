@@ -1,0 +1,11 @@
+main: dev.samkist.prison.Prison
+name: Prison
+api-version: 1.17
+description: Prison server
+database: true
+authors:
+  - cbotte21
+  - Samkist
+load: STARTUP
+prefix: Prison
+version: 1.0.0
