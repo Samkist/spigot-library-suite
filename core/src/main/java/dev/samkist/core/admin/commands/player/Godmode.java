@@ -13,6 +13,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class Godmode implements CommandExecutor, Listener {
+    public String command = "godmode";
     PlayerStateModifiers state;
     public Godmode(PlayerStateModifiers state) {
         this.state = state;

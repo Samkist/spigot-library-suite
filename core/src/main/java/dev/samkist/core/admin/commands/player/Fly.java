@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class Fly implements CommandExecutor {
+    public String command = "fly";
     PlayerStateModifiers state;
     public Fly(PlayerStateModifiers state) {
         this.state = state;

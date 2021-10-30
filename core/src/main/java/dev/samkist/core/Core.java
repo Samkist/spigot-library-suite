@@ -14,6 +14,7 @@ import dev.samkist.core.utils.ChatInstance;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Core extends JavaPlugin {
