@@ -4,12 +4,14 @@ import java.util.ArrayList;
 
 public class Mine {
     String name, permission;
+    boolean pvp;
     int minePos1, minePos2, zonePos1, zonePos2, legendLocation; //Will be 2 regions
     ArrayList<EventProbability> bossSpawn = new ArrayList<EventProbability>();
     ArrayList<EventProbability> blockSpawn = new ArrayList<EventProbability>();
-    public Mine(String name, String permission, ArrayList<EventProbability> blockSpawn, ArrayList<EventProbability> bossSpawn, int minePos1, int minePos2, int zonePos1, int zonePos2, int legendLocation) {
+    public Mine(String name, String permission, boolean pvp, ArrayList<EventProbability> blockSpawn, ArrayList<EventProbability> bossSpawn, int minePos1, int minePos2, int zonePos1, int zonePos2, int legendLocation) {
         this.name = name;
         this.permission = permission;
+        this.pvp = pvp;
         this.blockSpawn = blockSpawn;
         this.bossSpawn = bossSpawn;
         this.minePos1 = minePos1;
