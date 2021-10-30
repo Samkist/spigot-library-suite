@@ -92,8 +92,18 @@ public class FileManager {
             try {
                 configFiles.get(ymlFile).load(new File(plugin.getDataFolder(), ymlFile));
             } catch (Exception e) {
+
             }
         }
+    }
+
+    public Optional<FileConfiguration> reloadConfiguration(String yml) {
+        try {
+            getConfiguration(yml).load(new File(plugin.getDataFolder(), yml));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(getConfiguration(yml));
     }
 
     public FileConfiguration getConfigYml() {
@@ -106,5 +116,14 @@ public class FileManager {
             loadYaml(yml);
             return getConfiguration(yml);
         }
+    }
+
+    public Optional<FileConfiguration> saveConfig(String yml) {
+        try {
+            getConfiguration(yml).save(new File(plugin.getDataFolder(), yml));
+        } catch(Exception e) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(getConfiguration(yml));
     }
 }

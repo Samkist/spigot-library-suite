@@ -16,4 +16,12 @@ public class APIFileManager {
     public FileConfiguration getConfig(String yml) {
         return fileManager.getConfiguration(yml);
     }
+
+    public FileConfiguration saveConfig(String yml) {
+        return fileManager.saveConfig(yml).get();
+    }
+
+    public FileConfiguration reloadConfig(String yml) {
+        return fileManager.reloadConfiguration(yml).get();
+    }
 }
