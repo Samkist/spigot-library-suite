@@ -43,7 +43,7 @@ public class Economy implements CommandExecutor {
     }
 
     public int get(Player p) {
-        return new ServerPlayer(p).getBalance().intValue();
+        return 0;//return new ServerPlayer(p).getBalance().intValue();
     }
 
     public void set(Player p, int amount) {
@@ -55,14 +55,14 @@ public class Economy implements CommandExecutor {
     }
 
     public void deposit(Player p, int amount) {
-        new ServerPlayer(p)
+        /*new ServerPlayer(p)
                 .setBalance(
                         Decimal128.parse(
                                 String.valueOf(
                                         new ServerPlayer(p)
                                                 .getBalance()
                                                 .intValue() + amount
-                                )));
+                                )));*/
     }
 
     public void withdraw(Player p, int amount) {

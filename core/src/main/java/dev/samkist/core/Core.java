@@ -27,7 +27,7 @@ public class Core extends JavaPlugin {
 
         fileManager.initialize();
 
-        //configureDatabase();
+        configureDatabase();
 
         dataManager = new DataManager(fileManager, dbManager);
 
