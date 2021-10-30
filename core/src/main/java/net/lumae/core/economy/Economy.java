@@ -12,7 +12,11 @@ import java.math.BigDecimal;
 public class Economy {
 
     private final Core core = JavaPlugin.getPlugin(Core.class);
-    private final DataManager dataManager = core.getDataManager();
+    private final DataManager dataManager;
+
+    public Economy() {
+        dataManager = core.getDataManager();
+    }
 
     public void receipt(Player p) {
         p.sendMessage("[ECONOMY] Balance: $" + new LumaePlayer(p).getBalance().toString());

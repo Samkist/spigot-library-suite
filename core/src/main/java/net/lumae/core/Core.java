@@ -16,6 +16,7 @@ import net.lumae.core.admin.commands.player.EconomyCommand;
 import net.lumae.core.data.local.FileManager;
 import net.lumae.core.economy.Economy;
 import net.lumae.core.fun.PlayerCosmeticEvents;
+import net.lumae.core.listeners.JoinLeaveListener;
 import net.lumae.core.listeners.PlayerDataListener;
 import net.lumae.core.utils.ChatInstance;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -42,14 +43,14 @@ public class Core extends JavaPlugin {
 
         configureDatabase();
 
-        economy = new Economy();
-
         dataManager = new DataManager(fileManager, dbManager);
 
         coreAPI = CoreAPI.initialize(this);
 
+        economy = new Economy();
         //Listener initializers
         PlayerDataListener playerDataListener = new PlayerDataListener();
+        JoinLeaveListener joinLeaveListener = new JoinLeaveListener();
 
         //State modifiers initializers
         PlayerStateModifiers playerStateModifiers = new PlayerStateModifiers();
@@ -57,7 +58,7 @@ public class Core extends JavaPlugin {
         PlayerCosmeticEvents playerCosmeticEvents = new PlayerCosmeticEvents();
         ChatInstance chatInstance = new ChatInstance();
         EconomyCommand economyCommand = new EconomyCommand(economy);
-        List<String> economyCommands = List.of("balanace", "baltop", "pay", "economy");
+        List<String> economyCommands = List.of("balance", "baltop", "pay", "economy");
 
         economyCommands.forEach(name -> getCommand(name).setExecutor(economyCommand));
 
@@ -68,6 +69,7 @@ public class Core extends JavaPlugin {
 
         //Events
         this.getServer().getPluginManager().registerEvents(playerDataListener, this);
+        this.getServer().getPluginManager().registerEvents(joinLeaveListener, this);
         this.getServer().getPluginManager().registerEvents(chatInstance, this);
         this.getServer().getPluginManager().registerEvents(playerStateModifiers, this);
         this.getServer().getPluginManager().registerEvents(gameStateModifiers, this);

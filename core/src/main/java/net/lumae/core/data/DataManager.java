@@ -47,11 +47,11 @@ public class DataManager {
         if(players.containsKey(uuid)) {
             return saveLumaePlayer(players.get(uuid));
         }
-        return dbManager.saveLumaePlayer(players.get(uuid));
+        return loadLumaePlayer(player);
     }
 
     public Optional<LumaePlayer> login(Player player) {
-        return loadServerPlayer(player);
+        return loadLumaePlayer(player);
     }
 
     public Optional<LumaePlayer> loqout(Player player) {
@@ -64,7 +64,7 @@ public class DataManager {
         return dbManager.topPlayerByField(field);
     }
 
-    public Optional<LumaePlayer> loadServerPlayer(Player player) {
+    public Optional<LumaePlayer> loadLumaePlayer(Player player) {
         Optional<LumaePlayer> lumaePlayer = dbManager.loadLumaePlayer(player);
 
         lumaePlayer.ifPresent(p -> players.put(player.getUniqueId(), p));
@@ -77,7 +77,8 @@ public class DataManager {
     }
 
     public LumaePlayer fetchLumaePlayer(Player player) {
-        return players.get(player.getUniqueId());
+        return players.computeIfAbsent(player.getUniqueId(), p -> loadLumaePlayer(player).get());
+
     }
 
     public LumaePlayer fetchLumaePlayer(UUID uuid) {

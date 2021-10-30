@@ -28,7 +28,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
     compileOnly 'io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT'
     compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0";
-    implementation 'com.iridium:IridiumColorAPI:1.0.5'
+    implementation 'com.iridium:IridiumColorAPI:1.0.6'
     implementation 'org.mongodb:mongodb-driver-sync:4.3.3'
     implementation 'org.slf4j:slf4j-api:1.7.32'
     implementation 'ch.qos.logback:logback-classic:1.2.6'

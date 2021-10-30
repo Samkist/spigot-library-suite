@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class JoinLeaveListener implements Listener {
-    private static final Core plugin = JavaPlugin.getPlugin(Core.class);
+    private final Core plugin = JavaPlugin.getPlugin(Core.class);
     private final FileManager fileManager;
     //private final Message motd;
 
@@ -27,8 +27,9 @@ public class JoinLeaveListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
-        final String legacyMessage = ColorUtil.colorMessage("<$#50c878>" + player.getName() + " has arrived!<$#bddeec>");
+        final String legacyMessage = ColorUtil.colorMessage("<GRADIENT:50c878>" + player.getName() + " has arrived!</GRADIENT:bddeec>");
         event.joinMessage(null);
+        JavaPlugin.getPlugin(Core.class).getLogger().info(legacyMessage);
         Bukkit.getConsoleSender().sendMessage(player.getName() + " joined");
         Bukkit.getServer().getOnlinePlayers().forEach(p -> player.sendMessage(legacyMessage));
     }
@@ -36,7 +37,7 @@ public class JoinLeaveListener implements Listener {
     @EventHandler
     public void onLeave(PlayerQuitEvent event) {
         final Player player = event.getPlayer();
-        final String legacyMessage = ColorUtil.colorMessage("<$#50c878>" + player.getName() + " has departed!<$#bddeec>");
+        final String legacyMessage = ColorUtil.colorMessage("<GRADIENT:50c878>" + player.getName() + " has departed!</GRADIENT:bddeec>");
         event.quitMessage(null);
         Bukkit.getConsoleSender().sendMessage(player.getName() + " left");
         Bukkit.getServer().getOnlinePlayers().forEach(p -> player.sendMessage(legacyMessage));
