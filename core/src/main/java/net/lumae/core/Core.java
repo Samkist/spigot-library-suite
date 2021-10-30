@@ -2,6 +2,7 @@ package net.lumae.core;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.LoggerContext;
 import com.mongodb.MongoCredential;
 import net.lumae.core.admin.GameStateModifiers;
 import net.lumae.core.admin.PlayerStateModifiers;
@@ -11,13 +12,14 @@ import net.lumae.core.admin.commands.world.Day;
 import net.lumae.core.api.CoreAPI;
 import net.lumae.core.data.DataManager;
 import net.lumae.core.data.database.DBManager;
-import net.lumae.core.economy.Economy;
+import net.lumae.core.admin.commands.player.EconomyCommand;
 import net.lumae.core.data.local.FileManager;
+import net.lumae.core.economy.Economy;
 import net.lumae.core.fun.PlayerCosmeticEvents;
+import net.lumae.core.listeners.PlayerDataListener;
 import net.lumae.core.utils.ChatInstance;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import ch.qos.logback.classic.LoggerContext;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
@@ -30,6 +32,7 @@ public class Core extends JavaPlugin {
     private CoreAPI coreAPI;
     private DBManager dbManager;
     private DataManager dataManager;
+    private Economy economy;
     public static final long LAST_START_TIME = System.currentTimeMillis();
 
     @Override
@@ -39,23 +42,28 @@ public class Core extends JavaPlugin {
 
         configureDatabase();
 
+        economy = new Economy();
+
         dataManager = new DataManager(fileManager, dbManager);
 
         coreAPI = CoreAPI.initialize(this);
+
+        //Listener initializers
+        PlayerDataListener playerDataListener = new PlayerDataListener();
 
         //State modifiers initializers
         PlayerStateModifiers playerStateModifiers = new PlayerStateModifiers();
         GameStateModifiers gameStateModifiers = new GameStateModifiers();
         PlayerCosmeticEvents playerCosmeticEvents = new PlayerCosmeticEvents();
-        Economy economy = new Economy();
         ChatInstance chatInstance = new ChatInstance();
 
         //Command executors
-        List<LumaeExecutor> commands = Arrays.asList(new Cleanse(), new Enderchest(),
+        List<LumaeExecutor> commands = Arrays.asList(new EconomyCommand(economy), new Cleanse(), new Enderchest(),
                 new Feed(), new Fly(playerStateModifiers), new Gamemode(), new Give(), new Godmode(playerStateModifiers),
                 new Heal(), new Invsee(), new Xp(), new Day());
 
         //Events
+        this.getServer().getPluginManager().registerEvents(playerDataListener, this);
         this.getServer().getPluginManager().registerEvents(chatInstance, this);
         this.getServer().getPluginManager().registerEvents(playerStateModifiers, this);
         this.getServer().getPluginManager().registerEvents(gameStateModifiers, this);
@@ -82,9 +90,9 @@ public class Core extends JavaPlugin {
     }
 
     private void configureDatabase() {
-        /*LoggerContext loggerContext = (LoggerContext)LoggerFactory.getILoggerFactory();
+        LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
         Logger rootLogger = loggerContext.getLogger("net.lumae.org.mongodb.driver");
-        rootLogger.setLevel(Level.WARN);*/
+        rootLogger.setLevel(Level.WARN);
         final FileConfiguration configYml = fileManager.getConfigYml();
         final String connectionString = configYml.getString("database.connectionString");
         final String database = configYml.getString("database.name");
@@ -102,5 +110,9 @@ public class Core extends JavaPlugin {
 
     public CoreAPI api() {
         return this.coreAPI;
+    }
+
+    public Economy economy() {
+        return this.economy;
     }
 }
