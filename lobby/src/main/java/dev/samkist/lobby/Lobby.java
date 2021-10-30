@@ -1,7 +1,7 @@
 package dev.samkist.lobby;
 
-import dev.samkist.core.Core;
-import dev.samkist.core.api.CoreAPI;
+import net.lumae.core.Core;
+import net.lumae.core.api.CoreAPI;
 import dev.samkist.lobby.player.item.SpeedHacks;
 import dev.samkist.lobby.player.Interactions;
 import org.bukkit.plugin.java.JavaPlugin;

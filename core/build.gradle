@@ -29,7 +29,9 @@ dependencies {
     compileOnly 'io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT'
     compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0";
     implementation 'com.iridium:IridiumColorAPI:1.0.5'
-    implementation 'org.mongodb:mongodb-driver:3.5.0'
+    implementation 'org.mongodb:mongodb-driver-sync:4.3.3'
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'ch.qos.logback:logback-classic:1.2.6'
     compileOnly 'me.clip:placeholderapi:2.10.10'
     compileOnly 'net.luckperms:api:5.3'
 }
@@ -42,7 +44,8 @@ shadowJar {
     relocate("com.iridium", "net.lumae.iridium")
     relocate("com.mongodb", "net.lumae.com.mongodb")
     relocate("org.mongodb", "net.lumae.org.mongodb")
-    //relocate("net.bytebuddy", "net.lumae.bytebuddy")
+    relocate("org.slf4j", "net.lumae.slf4j")
+    relocate("ch.qos.logback", "net.lumae.logback")
     relocate("org.bson", "net.lumae.bson")
-    baseName "Lumae-Core"
+    baseName "LumaeLib"
 }
