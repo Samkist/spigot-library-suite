@@ -1,9 +1,8 @@
 package net.lumae.core.admin.commands.world;
 
-import net.lumae.core.admin.GameStateModifiers;
+import net.lumae.core.modifiers.GameStateModifiers;
 import net.lumae.core.admin.commands.LumaeExecutor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 

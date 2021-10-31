@@ -1,12 +1,9 @@
-package net.lumae.core.admin;
+package net.lumae.core.modifiers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
-public class GameStateModifiers implements Listener {
-    public GameStateModifiers() {
-
-    }
+public class GameStateModifiers {
     public static void setTime(long time) {
         Bukkit.getServer().getWorld("world").setTime(time);
     }

@@ -1,9 +1,8 @@
-package net.lumae.core.admin;
+package net.lumae.core.modifiers;
 
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
@@ -14,8 +13,8 @@ import java.util.ArrayList;
 TODO: Might want to get a fetch player class to get an offline player if not online!
  */
 
-public class PlayerStateModifiers implements Listener {
-    public ArrayList<Player> ACTIVE_GODMODE = new ArrayList<>();
+public class PlayerStateModifiers {
+    public static ArrayList<Player> ACTIVE_GODMODE = new ArrayList<>();
     public static void setHealth(Player p, double level) {
         p.setHealth(level);
     }
@@ -88,22 +87,22 @@ public class PlayerStateModifiers implements Listener {
             PlayerStateModifiers.enableFlight(p);
         }
     }
-    public boolean isGodmode(Player p) {
-        return this.ACTIVE_GODMODE.contains(p);
+    public static boolean isGodmode(Player p) {
+        return ACTIVE_GODMODE.contains(p);
     }
-    public void enableGodmode(Player p) {
-        this.ACTIVE_GODMODE.add(p);
+    public static void enableGodmode(Player p) {
+        ACTIVE_GODMODE.add(p);
         p.sendMessage("[PluginSuite] Godmode enabled!");
     }
-    public void disableGodmode(Player p) {
-        this.ACTIVE_GODMODE.remove(p);
+    public static void disableGodmode(Player p) {
+        ACTIVE_GODMODE.remove(p);
         p.sendMessage("[PluginSuite] Godmode disabled!");
     }
-    public void toggleGodmode(Player p) {
-        if (this.isGodmode(p)) {
-            this.disableGodmode(p);
+    public static void toggleGodmode(Player p) {
+        if (isGodmode(p)) {
+            disableGodmode(p);
         } else {
-            this.enableGodmode(p);
+            enableGodmode(p);
         }
     }
     public PlayerStateModifiers() {
