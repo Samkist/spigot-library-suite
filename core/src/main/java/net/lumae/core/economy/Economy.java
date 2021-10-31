@@ -30,11 +30,11 @@ public class Economy {
         player.sendMessage("[ECONOMY] You have $" + Math.abs(this.get(player) - this.get(prospect)) + ((this.get(player) > this.get(prospect)) ? " more " : " fewer " + "dollars!"));
     }
 
-    private boolean atLeast(Player p, int amount) {
+    private boolean atLeast(Player p, double amount) {
         return (amount <= this.get(p));
     }
 
-    public boolean transfer(Player player, Player prospect, int amount) {
+    public boolean transfer(Player player, Player prospect, double amount) {
         if (this.atLeast(player, amount)) {
             this.withdraw(player, amount);
             this.deposit(prospect, amount);
@@ -43,26 +43,26 @@ public class Economy {
         return false;
     }
 
-    private int get(Player p) {
-        return dataManager.fetchLumaePlayer(p).getBalance().intValue(); //TODO change to double
+    private double get(Player p) {
+        return dataManager.fetchLumaePlayer(p).getBalance().doubleValue(); //TODO change to double
     }
 
-    public void set(Player p, int amount) {
+    public void set(Player p, double amount) {
         dataManager.fetchLumaePlayer(p)
-                .setBalance(new Decimal128(new BigDecimal((double) amount)));
+                .setBalance(new Decimal128(new BigDecimal((double) Math.abs(amount))));
     }
 
-    public void deposit(Player p, int amount) {
+    public void deposit(Player p, double amount) {
         dataManager.fetchLumaePlayer(p)
-                .setBalance(new Decimal128(new BigDecimal((double) amount)));
+                .setBalance(new Decimal128(new BigDecimal((double) Math.abs(amount))));
     }
 
-    public void withdraw(Player p, int amount) {
-        this.deposit(p, -1 * amount);
+    public void withdraw(Player p, double amount) {
+        this.deposit(p, -1 * Math.abs(amount));
     }
-    public boolean attemptWithdraw(Player p, int amount) {
-        if (this.atLeast(p, amount)) {
-            this.withdraw(p, amount);
+    public boolean attemptWithdraw(Player p, double amount) {
+        if (this.atLeast(p, Math.abs(amount))) {
+            this.withdraw(p, Math.abs(amount));
             return true;
         }
         return false;
