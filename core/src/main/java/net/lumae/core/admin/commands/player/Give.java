@@ -1,11 +1,10 @@
 package net.lumae.core.admin.commands.player;
 
-import net.lumae.core.admin.PlayerStateModifiers;
+import net.lumae.core.modifiers.PlayerStateModifiers;
 import net.lumae.core.admin.commands.LumaeExecutor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

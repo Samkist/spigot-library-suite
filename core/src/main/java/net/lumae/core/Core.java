@@ -4,8 +4,8 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
 import com.mongodb.MongoCredential;
-import net.lumae.core.admin.GameStateModifiers;
-import net.lumae.core.admin.PlayerStateModifiers;
+import net.lumae.core.modifiers.GameStateModifiers;
+import net.lumae.core.modifiers.PlayerStateModifiers;
 import net.lumae.core.admin.commands.LumaeExecutor;
 import net.lumae.core.admin.commands.player.*;
 import net.lumae.core.admin.commands.world.Day;
@@ -71,8 +71,6 @@ public class Core extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(playerDataListener, this);
         this.getServer().getPluginManager().registerEvents(joinLeaveListener, this);
         this.getServer().getPluginManager().registerEvents(chatInstance, this);
-        this.getServer().getPluginManager().registerEvents(playerStateModifiers, this);
-        this.getServer().getPluginManager().registerEvents(gameStateModifiers, this);
         //this.getServer().getPluginManager().registerEvents(playerCosmeticEvents, this);
 
         commands.forEach(cmd -> this.getCommand(cmd.commandName()).setExecutor(cmd));

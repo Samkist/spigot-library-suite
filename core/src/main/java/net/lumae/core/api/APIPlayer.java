@@ -13,23 +13,31 @@ public class APIPlayer {
     private final Player player;
     private final Core core = JavaPlugin.getPlugin(Core.class);
     private final Economy economy = core.economy();
-    private final EconomyController economyController;
+    private EconomyController economyController;
+    private PlayerStateController playerStateController;
 
     protected APIPlayer(LumaePlayer lumaePlayer) {
-        this.lumaePlayer = lumaePlayer;
         this.player = core.getServer().getPlayer(UUID.fromString(lumaePlayer.getUuid()));
-        this.economyController = new EconomyController(player, economy);
+        this.lumaePlayer = lumaePlayer;
+        initialize();
     }
 
     protected APIPlayer(Player player) {
-        this.lumaePlayer = core.getDataManager().fetchLumaePlayer(player);
         this.player = player;
+        this.lumaePlayer = core.getDataManager().fetchLumaePlayer(player);
+        initialize();
+    }
+
+    private void initialize() {
         this.economyController = new EconomyController(player, economy);
+        this.playerStateController = new PlayerStateController(player);
     }
 
     public EconomyController economyController() {
         return this.economyController;
     }
 
-
+    public PlayerStateController playerStateController() {
+        return this.playerStateController;
+    }
 }
