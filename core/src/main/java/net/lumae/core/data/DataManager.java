@@ -77,7 +77,13 @@ public class DataManager {
     }
 
     public LumaePlayer fetchLumaePlayer(Player player) {
-        return players.computeIfAbsent(player.getUniqueId(), p -> loadLumaePlayer(player).get());
+        UUID uuid = player.getUniqueId();
+        if(players.containsKey(uuid)) {
+            return players.get(uuid);
+        } else {
+            LumaePlayer lumaePayer = loadLumaePlayer(player).get();
+            return players.put(uuid, lumaePayer);
+        }
 
     }
 

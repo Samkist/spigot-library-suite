@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.units.qual.C;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class CoreAPI {
 
@@ -33,6 +34,10 @@ public class CoreAPI {
 
     public APIPlayer getAPIPlayer(LumaePlayer player) {
         return new APIPlayer(player);
+    }
+
+    public APIPlayer getAPIPlayer(UUID uuid) {
+        return new APIPlayer(core.getServer().getPlayer(uuid));
     }
 
     public APIFileManager getFileManagerAPI() {
