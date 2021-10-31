@@ -10,12 +10,17 @@ repositories {
     maven {
         url 'https://papermc.io/repo/repository/maven-public/'
     }
+    maven {
+        name = "IntellectualSites Releases"
+        url = uri("https://mvn.intellectualsites.com/content/repositories/releases/")
+    }
 }
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
     compileOnly 'io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT'
+    compileOnly 'com.fastasyncworldedit:FastAsyncWorldEdit-Core:1.17-380'
     implementation project(':core')
 }
 

@@ -1,6 +1,5 @@
 package me.cbotte21.kits;
 
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

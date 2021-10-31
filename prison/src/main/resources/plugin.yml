@@ -2,7 +2,7 @@ main: dev.samkist.prison.Prison
 name: Prison
 api-version: 1.17
 description: Prison server
-depend: [ Core ]
+depend: [Core]
 database: true
 authors:
   - cbotte21

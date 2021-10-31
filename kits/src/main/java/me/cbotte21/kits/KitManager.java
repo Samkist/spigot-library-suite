@@ -49,7 +49,7 @@ public class KitManager implements CommandExecutor {
     public void deleteKit(Kit kit) { //DEV command
         this.deleteKit(kit.name);
     } //Admin command
-    public void deleteKit(String name) { //Admin command
+    public void deleteKit(String name) { //DEV command
         for (Kit kit : this.kits) {
             if (kit.name == name) {
                 this.kits.remove(kit);

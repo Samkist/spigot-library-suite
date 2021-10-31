@@ -16,10 +16,15 @@ public class Rankup implements CommandExecutor {
     public Rankup(CoreAPI coreApi) {
         this.coreApi = coreApi;
     }
-
     private class Group {
         private String name;
         public double amount;
+        public void setAmount(double amount) {
+            this.amount = amount;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
     }
     private ArrayList<Group> ranks;
     public Group getGroup(String name) {

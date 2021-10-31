@@ -1,24 +1,28 @@
 package dev.samkist.prison;
 
+import com.sk89q.worldedit.regions.Region;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+
 import java.util.ArrayList;
 
 public class Mine {
     String name, permission;
     boolean pvp;
-    int minePos1, minePos2, zonePos1, zonePos2, legendLocation; //Will be 2 regions
-    ArrayList<EventProbability> bossSpawn = new ArrayList<EventProbability>();
-    ArrayList<EventProbability> blockSpawn = new ArrayList<EventProbability>();
-    public Mine(String name, String permission, boolean pvp, ArrayList<EventProbability> blockSpawn, ArrayList<EventProbability> bossSpawn, int minePos1, int minePos2, int zonePos1, int zonePos2, int legendLocation) {
+    Region mineRegion, zoneRegion;
+    Location legendPosition, spawnPosition;
+    ArrayList<Boss> bosses = new ArrayList<Boss>();
+    ArrayList<Block> blocks = new ArrayList<Block>();
+    public Mine(String name, String permission, boolean pvp, ArrayList<Block> blocks, ArrayList<Boss> bosses, Region mineRegion, Region zoneRegion, Location legendPosition, Location spawnPosition) {
         this.name = name;
         this.permission = permission;
         this.pvp = pvp;
-        this.blockSpawn = blockSpawn;
-        this.bossSpawn = bossSpawn;
-        this.minePos1 = minePos1;
-        this.minePos2 = minePos2;
-        this.zonePos1 = zonePos1;
-        this.zonePos2 = zonePos2;
-        this.legendLocation = legendLocation;
+        this.blocks = blocks;
+        this.bosses = bosses;
+        this.mineRegion = mineRegion;
+        this.zoneRegion = zoneRegion;
+        this.legendPosition = legendPosition;
+        this.spawnPosition = spawnPosition;
     }
     public void teleportOutPlayer() {
         //TODO: Teleport all players outside of mine. To closest axis point outside so they don't get grouped.
@@ -28,5 +32,12 @@ public class Mine {
     }
     public void createLegend() {
         //TODO: Holographic name at po
+    }
+    public void teleport(Player p) {
+        p.teleport(this.spawnPosition);
+        p.sendMessage("[Prison] Teleported.");
+    }
+    public boolean containsBlock(int x, int y) {
+        return this.mineRegion.contains(x, y);
     }
 }
