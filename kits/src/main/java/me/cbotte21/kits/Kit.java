@@ -38,6 +38,12 @@ public class Kit {
             p.sendMessage(this.giveMessage);
         }
     }
+    public void setCooldown(int cooldown) {
+        this.cooldown = cooldown;
+    }
+    public int getCooldown() {
+        return this.cooldown;
+    }
     public void appendInventory(Player p) {
         for (ItemStack item : this.items) {
             if (p.getInventory().firstEmpty() == -1) { //Inventory full, drop item on floor
