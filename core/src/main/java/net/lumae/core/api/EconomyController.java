@@ -3,6 +3,8 @@ package net.lumae.core.api;
 import net.lumae.core.economy.Economy;
 import org.bukkit.entity.Player;
 
+import java.util.function.BiConsumer;
+
 public class EconomyController {
     private final Player player;
     private final Economy economy;
@@ -12,26 +14,30 @@ public class EconomyController {
         this.economy = economy;
     }
 
-    public void receipt() {
-        economy.receipt(player);
+    public APIResponse<Player, Void> receipt() {
+        return new APIAction<>(p -> economy.receipt(p), player, null);
     }
 
     //TODO change to double
-    public boolean transfer(Player target, Double amount) {
-        return economy.transfer(player, target, amount.intValue());
+    public APIResponse<Player, Double> transfer(Player target, Double amount) {
+        BiConsumer<Player, Double> biConsumer = (p, amt) -> economy.transfer(player, p, amt);
+        return new APIAction<>(biConsumer, target, amount);
     }
     //TODO change to double
-    public void set(Double amount) {
-        economy.set(player, amount.intValue());
-    }
-
-    //TODO change to double
-    public void deposit(Double amount) {
-        economy.deposit(player, amount.intValue());
+    public APIResponse<Player, Double> set(Double amount) {
+        return new APIAction<>(p -> economy.set(p, amount), player, amount);
     }
 
     //TODO change to double
-    public void withdraw(Double amount) {
+    public APIResponse<Player, Double> deposit(Double amount) {
+        return new APIAction<>(p -> economy.deposit(p, amount), player, amount);
+    }
+
+
+
+    //TODO change to double
+    public APIResponse<Player, Double> withdraw(Double amount) {
         economy.withdraw(player, amount.intValue());
+        return new APIAction<>(p -> economy.withdraw(p, amount), player, amount);
     }
 }
