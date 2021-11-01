@@ -12,12 +12,12 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class JoinLeaveListener implements Listener {
-    private final Core plugin = JavaPlugin.getPlugin(Core.class);
+    private final Core core = JavaPlugin.getPlugin(Core.class);
     private final FileManager fileManager;
     //private final Message motd;
 
     public JoinLeaveListener() {
-        this.fileManager = plugin.getFileManager();
+        this.fileManager = core.getFileManager();
         /*this.motd = plugin.getDataManager().messageById("lumae-motd")
                 .orElse(new Message("lumae-motd",
                         fileManager.getConfigYml().getString("defaults.pluginMessages.motd.format")
@@ -29,7 +29,6 @@ public class JoinLeaveListener implements Listener {
         final Player player = event.getPlayer();
         final String legacyMessage = ColorUtil.colorMessage("<GRADIENT:50c878>" + player.getName() + " has arrived!</GRADIENT:bddeec>");
         event.joinMessage(null);
-        JavaPlugin.getPlugin(Core.class).getLogger().info(legacyMessage);
         Bukkit.getConsoleSender().sendMessage(player.getName() + " joined");
         Bukkit.getServer().getOnlinePlayers().forEach(p -> player.sendMessage(legacyMessage));
     }

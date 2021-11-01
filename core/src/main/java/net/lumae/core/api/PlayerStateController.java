@@ -70,7 +70,7 @@ public class PlayerStateController {
         return new APIAction<>(p -> p.setGameMode(gamemode), player, gamemode);
     }
 
-    public APIResult<Player, GameMode> gameMode() {
+    public APIResponse<Player, GameMode> gameMode() {
         return new APIResult<>(p -> p.getGameMode(), player);
     }
 
