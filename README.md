@@ -1,1 +1,3 @@
-LunaeMC plugins.
+LumaeMC Plugin Suite
+
+
