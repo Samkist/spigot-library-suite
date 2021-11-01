@@ -1,0 +1,8 @@
+main: net.lumae.broadcaster.Broadcaster
+name: Broadcaster
+description: A server auto-broadcaster
+database: false
+authors: [ cbotte21, Samkist ]
+load: POSTWORLD
+api-version: 1.17
+version: 1.0.0

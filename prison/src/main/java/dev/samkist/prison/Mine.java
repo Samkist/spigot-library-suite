@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Mine {
     String name, permission;
-    boolean pvp;
+    boolean pvp, DISABLED;
     Region mineRegion, zoneRegion;
     Location legendPosition, spawnPosition;
     ArrayList<Boss> bosses = new ArrayList<Boss>();
@@ -32,6 +32,13 @@ public class Mine {
     }
     public void createLegend() {
         //TODO: Holographic name at po
+    }
+    public void disable() {
+        this.DISABLED = true;
+        /*
+        Teleport all players inside zone to spawn
+        Send all players that were teleported a message saying the mine was disabled
+         */
     }
     public void teleport(Player p) {
         p.teleport(this.spawnPosition);
