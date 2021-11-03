@@ -9,16 +9,16 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.ReplaceOneModel;
-import com.mongodb.client.model.ReplaceOptions;
-import com.mongodb.client.model.Sorts;
+import com.mongodb.client.model.*;
 import net.lumae.core.Core;
+import net.lumae.core.data.DataManager;
 import net.lumae.core.data.entities.ChatFormat;
 import net.lumae.core.data.entities.JoinLeaveFormat;
 import net.lumae.core.data.entities.LumaePlayer;
+import net.lumae.core.data.entities.Message;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -29,6 +29,7 @@ import static com.mongodb.client.model.Filters.*;
 
 public class DBManager {
     private final Core plugin;
+    private final DataManager dataManager;
     private final MongoCredential credential;
     private final String host;
     private final String database;
@@ -40,12 +41,14 @@ public class DBManager {
     private MongoCollection<ChatFormat> chatFormats;
     private MongoCollection<JoinLeaveFormat> joinLeaveFormats;
     private MongoCollection<LumaePlayer> players;
+    private MongoCollection<Message> pluginMessages;
     private static final CodecRegistry codecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
-            fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+    fromProviders(PojoCodecProvider.builder().automatic(true).build()));
     private static final ReplaceOptions replaceOptions = (new ReplaceOptions()).upsert(true);
 
     public DBManager(Core plugin, String connectionString, String database) {
         this.plugin = plugin;
+        this.dataManager = plugin.getDataManager();
         this.connectionString = connectionString;
         this.credential = null;
         this.host = null;
@@ -56,6 +59,7 @@ public class DBManager {
 
     public DBManager(Core plugin, MongoCredential credential, String host, String database, Integer port) {
         this.plugin = plugin;
+        this.dataManager = plugin.getDataManager();
         this.credential = credential;
         this.host = host;
         this.database = database;
@@ -83,6 +87,7 @@ public class DBManager {
         this.chatFormats = this.mongoDatabase.getCollection("chatFormats", ChatFormat.class);
         this.joinLeaveFormats = this.mongoDatabase.getCollection("joinLeaveFormats", JoinLeaveFormat.class);
         this.players = this.mongoDatabase.getCollection("players", LumaePlayer.class);
+        this.pluginMessages = this.mongoDatabase.getCollection("pluginMessages", Message.class);
     }
 
     public void saveAllPlayers(Map<UUID, LumaePlayer> serverPlayerMap) {
@@ -134,32 +139,69 @@ public class DBManager {
         return Objects.nonNull(serverPlayer) ? Optional.of(serverPlayer) : initializeLumaePlayer(player);
     }
 
-    public Optional<ChatFormat> initializeChatFormats(ChatFormat chatFormat) {
-        if (!this.init)
-            return Optional.empty();
-        ChatFormat result = chatFormats.find().first();
-        return Objects.nonNull(result) ? Optional.of(result) : Optional.empty();
+    private List<ChatFormat> initializeChatFormats(List<ChatFormat> formats) {
+        return chatFormats.insertMany(formats).wasAcknowledged() ? formats : null;
     }
 
     public List<ChatFormat> loadChatFormats() {
-        ArrayList<ChatFormat> chatFormatsList = new ArrayList<>();
+        ArrayList<ChatFormat> formats = new ArrayList<>();
         if (!this.init)
-            return chatFormatsList;
-        this.chatFormats.find().forEach(chatFormatsList::add);
-        return chatFormatsList;
+            return formats;
+        if(!isEmpty(chatFormats)) {
+            this.chatFormats.find().forEach(formats::add);
+        } else {
+            formats.addAll(
+                    initializeChatFormats(dataManager.getDefaultChatFormats())
+            );
+        }
+        return formats;
     }
 
-    public Optional<JoinLeaveFormat> initializeJoinLeaveFormats(JoinLeaveFormat format) {
-        if (!this.init)
-            return Optional.empty();
-        return this.joinLeaveFormats.insertOne(format).wasAcknowledged() ? Optional.ofNullable(format) : Optional.empty();
+    private List<JoinLeaveFormat> initializeJoinLeaveFormats(List<JoinLeaveFormat> formats) {
+        return joinLeaveFormats.insertMany(formats).wasAcknowledged() ? formats : null;
     }
 
+    /**
+     * Function will check if there are any already initialized formats
+     * If not, it will call {@link DBManager#initializeJoinLeaveFormats(List)},
+     * supplying the default values loaded from defaults.yml
+     *
+     * @return the list of loaded JoinLeaveFormats
+     */
     public List<JoinLeaveFormat> loadJoinLeaveFormats() {
-        ArrayList<JoinLeaveFormat> joinLeaveFormatList = new ArrayList<>();
+        ArrayList<JoinLeaveFormat> formats = new ArrayList<>();
         if (!this.init)
-            return joinLeaveFormatList;
-        this.joinLeaveFormats.find().forEach(joinLeaveFormatList::add);
-        return joinLeaveFormatList;
+            return formats;
+        if(!isEmpty(joinLeaveFormats)) {
+            this.joinLeaveFormats.find().forEach(formats::add);
+        } else {
+            formats.addAll(
+                    initializeJoinLeaveFormats(dataManager.getDefaultJoinLeaveFormats())
+            );
+        }
+        return formats;
     }
+
+    private List<Message> initializeMessages(List<Message> messages) {
+        return pluginMessages.insertMany(messages).wasAcknowledged() ? messages : null;
+    }
+
+    public List<Message> loadMessages() {
+        ArrayList<Message> messages = new ArrayList<>();
+        if (!this.init)
+            return messages;
+        if(!isEmpty(pluginMessages)) {
+            this.pluginMessages.find().forEach(messages::add);
+        } else {
+            messages.addAll(
+                    initializeMessages(dataManager.getDefaultPluginMessages())
+            );
+        }
+        return messages;
+    }
+
+    private boolean isEmpty(MongoCollection collection) {
+        return Objects.isNull(collection.find().first());
+    }
+
 }

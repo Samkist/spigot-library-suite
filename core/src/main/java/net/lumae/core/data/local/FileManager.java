@@ -23,7 +23,7 @@ public class FileManager {
     }
 
     //Pertinent files that belong in the plugin folder
-    private final ArrayList<String> ymlFiles = new ArrayList<>(List.of("config.yml"));
+    private final ArrayList<String> ymlFiles = new ArrayList<>(List.of("config.yml", "defaults.yml"));
     private final ArrayList<String> jsonFiles = new ArrayList<>(List.of("player-data.json"));
     private final String[] directories = {};
 
@@ -106,9 +106,6 @@ public class FileManager {
         return Optional.ofNullable(getConfiguration(yml));
     }
 
-    public FileConfiguration getConfigYml() {
-        return configFiles.get("config.yml");
-    }
     public FileConfiguration getConfiguration(String yml) {
         if(configFiles.containsKey(yml)) {
             return configFiles.get(yml);
@@ -117,7 +114,6 @@ public class FileManager {
             return getConfiguration(yml);
         }
     }
-
     public Optional<FileConfiguration> saveConfig(String yml) {
         try {
             getConfiguration(yml).save(new File(plugin.getDataFolder(), yml));
@@ -125,5 +121,13 @@ public class FileManager {
             return Optional.empty();
         }
         return Optional.ofNullable(getConfiguration(yml));
+    }
+
+    public FileConfiguration getConfigYml() {
+        return configFiles.get("config.yml");
+    }
+
+    public FileConfiguration getDefaultsYml() {
+        return configFiles.get("defaults.yml");
     }
 }

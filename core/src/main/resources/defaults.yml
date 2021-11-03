@@ -1,0 +1,14 @@
+chatFormats:
+  default:
+    permission: 'lumae.chat.default'
+    messageFormat: '%luckperms_prefix% %player_displayname% &8»&7 %lumae_message%'
+    priority: 99999
+joinLeaveFormats:
+  default:
+    permission: 'lumae.joinleave.default'
+    joinFormat: '&e%player_name% &7has arrived!'
+    leaveFormat: '&e%player_name% &7has departed!'
+    priority: 99999
+pluginMessages:
+  lumae-motd:
+    format: '&eWelcome back to Lumae &7%player_name%!'
