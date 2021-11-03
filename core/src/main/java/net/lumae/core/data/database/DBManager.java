@@ -175,9 +175,6 @@ public class DBManager {
         if(!isEmpty(joinLeaveFormats)) {
             this.joinLeaveFormats.find().forEach(formats::add);
         } else {
-            dataManager.getDefaultJoinLeaveFormats().forEach(f -> {
-                plugin.getLogger().info("Format: " + f.getName());
-            });
             formats.addAll(
                     initializeJoinLeaveFormats(dataManager.getDefaultJoinLeaveFormats())
             );
