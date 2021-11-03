@@ -21,20 +21,24 @@ public class DataManager {
     private final DBManager dbManager;
     private final Map<UUID, LumaePlayer> players;
     private final Map<String, Message> pluginMessages;
-    private List<ChatFormat> chatFormats;
-    private List<JoinLeaveFormat> joinLeaveFormats;
+    private final Map<String, ChatFormat> chatFormats;
+    private final Map<String, JoinLeaveFormat> joinLeaveFormats;
     public DataManager(FileManager fileManager, DBManager dbManager) {
         this.fileManager = fileManager;
         this.defaults = fileManager.getDefaultsYml();
         this.dbManager = dbManager;
         this.players = new HashMap<>();
         this.pluginMessages = new HashMap<>();
-        initialize();
+        this.chatFormats = new HashMap<>();
+        this.joinLeaveFormats = new HashMap<>();
     }
 
-    private void initialize() {
-
+    public void initialize() {
+        loadPluginMessages();
+        loadChatFormats();
+        loadJoinLeaveFormats();
     }
+
 
     public void saveAllPlayers(Map<UUID, LumaePlayer> serverPlayer) {
         dbManager.saveAllPlayers(serverPlayer);
@@ -75,6 +79,26 @@ public class DataManager {
         }
     }
 
+    public Map<String, ChatFormat> loadChatFormats() {
+        List<ChatFormat> formats = dbManager.loadChatFormats();
+        chatFormats.clear();
+        formats.forEach(f -> chatFormats.put(f.getName(), f));
+        return chatFormats;
+    }
+
+    public Map<String, JoinLeaveFormat> loadJoinLeaveFormats() {
+        List<JoinLeaveFormat> formats = dbManager.loadJoinLeaveFormats();
+        joinLeaveFormats.clear();
+        formats.forEach(f -> joinLeaveFormats.put(f.getName(), f));
+        return joinLeaveFormats;
+    }
+
+    public Map<String, Message> loadPluginMessages() {
+        List<Message> messages = dbManager.loadMessages();
+        pluginMessages.clear();
+        messages.forEach(m -> pluginMessages.put(m.getMessageId(), m));
+        return pluginMessages;
+    }
 
     public List<ChatFormat> getDefaultChatFormats() {
         ArrayList<ChatFormat> chatFormats = new ArrayList<>();
@@ -104,7 +128,7 @@ public class DataManager {
                     return new JoinLeaveFormat(key, permission, joinFormat,  leaveFormat, priority);
                 }
         ).forEach(joinLeaveFormats::add);
-        return null;
+        return joinLeaveFormats;
     }
 
     public List<Message> getDefaultPluginMessages() {
@@ -124,5 +148,21 @@ public class DataManager {
 
     public DBManager getDbManager() {
         return dbManager;
+    }
+
+    public Map<UUID, LumaePlayer> getPlayers() {
+        return players;
+    }
+
+    public Map<String, Message> getPluginMessages() {
+        return pluginMessages;
+    }
+
+    public Map<String, ChatFormat> getChatFormats() {
+        return chatFormats;
+    }
+
+    public Map<String, JoinLeaveFormat> getJoinLeaveFormats() {
+        return joinLeaveFormats;
     }
 }
