@@ -51,6 +51,10 @@ public class Core extends JavaPlugin {
 
         dataManager = new DataManager(fileManager, dbManager);
 
+        dbManager.initialize();
+
+        dataManager.initialize();
+
         coreAPI = CoreAPI.initialize(this);
 
         economy = new Economy();
@@ -67,9 +71,19 @@ public class Core extends JavaPlugin {
         economyCommands.forEach(name -> getCommand(name).setExecutor(economyCommand));
 
         //Command executors
-        List<LumaeExecutor> commands = Arrays.asList(new Cleanse(), new Enderchest(),
-                new Feed(), new Fly(playerStateModifiers), new Gamemode(), new Give(), new Godmode(playerStateModifiers),
-                new Heal(), new Invsee(), new Xp(), new Day());
+        List<LumaeExecutor> commands = Arrays.asList(
+                new Cleanse("cleanse"),
+                new Enderchest("enderchest"),
+                new Feed("feed"),
+                new Fly("fly", playerStateModifiers),
+                new Gamemode("gamemode"),
+                new Give("give"),
+                new Godmode("godmode", playerStateModifiers),
+                new Heal("heal"),
+                new Invsee("invsee"),
+                new Xp("xp"),
+                new Day("day")
+        );
 
         //Events
         this.getServer().getPluginManager().registerEvents(playerDataListener, this);

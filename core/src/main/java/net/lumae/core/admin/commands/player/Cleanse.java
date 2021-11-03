@@ -1,5 +1,6 @@
 package net.lumae.core.admin.commands.player;
 
+import net.lumae.core.Core;
 import net.lumae.core.modifiers.PlayerStateModifiers;
 import net.lumae.core.admin.commands.LumaeExecutor;
 import org.bukkit.Bukkit;
@@ -8,7 +9,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class Cleanse implements LumaeExecutor {
+public class Cleanse extends LumaeExecutor {
+
+    public Cleanse(String commandName) {
+        super(commandName);
+    }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length == 1) {
@@ -19,10 +25,5 @@ public class Cleanse implements LumaeExecutor {
             ((Player)sender).sendMessage("[LunaeMC] You have been cleansed!");
         }
         return true;
-    }
-
-    @Override
-    public String commandName() {
-        return "cleanse";
     }
 }

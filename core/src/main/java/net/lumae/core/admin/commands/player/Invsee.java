@@ -8,7 +8,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class Invsee implements LumaeExecutor {
+public class Invsee extends LumaeExecutor {
+    public Invsee(String commandName) {
+        super(commandName);
+    }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length != 1) return false;
@@ -17,8 +21,4 @@ public class Invsee implements LumaeExecutor {
         return true;
     }
 
-    @Override
-    public String commandName() {
-        return "invsee";
-    }
 }

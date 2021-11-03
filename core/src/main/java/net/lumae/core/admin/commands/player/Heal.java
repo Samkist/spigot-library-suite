@@ -8,7 +8,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class Heal implements LumaeExecutor {
+public class Heal extends LumaeExecutor {
+    public Heal(String commandName) {
+        super(commandName);
+    }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length == 1) {
@@ -17,10 +21,5 @@ public class Heal implements LumaeExecutor {
             PlayerStateModifiers.setHealth((Player) sender, 20.0);
         }
         return true;
-    }
-
-    @Override
-    public String commandName() {
-        return "heal";
     }
 }

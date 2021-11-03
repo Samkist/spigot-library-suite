@@ -12,9 +12,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class Godmode implements LumaeExecutor, Listener {
+public class Godmode extends LumaeExecutor implements Listener {
     PlayerStateModifiers state;
-    public Godmode(PlayerStateModifiers state) {
+    public Godmode(String commandName, PlayerStateModifiers state) {
+        super(commandName);
         this.state = state;
     }
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled=false)
