@@ -4,10 +4,12 @@ package dev.samkist.prison;
 Custom block spawning can allow interceptor methods such as double drops.
  */
 
-public class Block {
+import org.bukkit.inventory.ItemStack;
+
+public class MineBlock {
     Object obj; //Might be ItemStack or MobEntity
     double rate;
-    public Block(Object obj, double rate) {
+    public MineBlock(Object obj, double rate) {
         this.obj = obj;
         this.rate = rate;
     }

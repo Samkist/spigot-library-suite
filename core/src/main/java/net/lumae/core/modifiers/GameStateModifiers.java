@@ -7,4 +7,5 @@ public class GameStateModifiers {
     public static void setTime(long time) {
         Bukkit.getServer().getWorld("world").setTime(time);
     }
+    public static void setDay() { Bukkit.getServer().getWorld("world").setTime(7); }
 }
