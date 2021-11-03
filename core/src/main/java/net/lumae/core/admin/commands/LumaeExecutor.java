@@ -1,6 +1,8 @@
 package net.lumae.core.admin.commands;
 
+import net.lumae.core.Core;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class LumaeExecutor implements CommandExecutor {
     private final String commandName;

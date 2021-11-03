@@ -4,34 +4,25 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
 import com.mongodb.MongoCredential;
-import net.lumae.core.api.APIPlayer;
-import net.lumae.core.api.EconomyController;
-import net.lumae.core.api.PlayerStateController;
-import net.lumae.core.modifiers.GameStateModifiers;
-import net.lumae.core.modifiers.PlayerStateModifiers;
 import net.lumae.core.admin.commands.LumaeExecutor;
 import net.lumae.core.admin.commands.player.*;
 import net.lumae.core.admin.commands.world.Day;
 import net.lumae.core.api.CoreAPI;
 import net.lumae.core.data.DataManager;
 import net.lumae.core.data.database.DBManager;
-import net.lumae.core.admin.commands.player.EconomyCommand;
 import net.lumae.core.data.local.FileManager;
 import net.lumae.core.economy.Economy;
-import net.lumae.core.fun.PlayerCosmeticEvents;
 import net.lumae.core.listeners.JoinLeaveListener;
 import net.lumae.core.listeners.PlayerDataListener;
+import net.lumae.core.modifiers.PlayerStateModifiers;
 import net.lumae.core.utils.ChatInstance;
-import org.bukkit.GameMode;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.BiConsumer;
 
 public class Core extends JavaPlugin {
 
@@ -65,7 +56,7 @@ public class Core extends JavaPlugin {
         //State modifiers initializers
         PlayerStateModifiers playerStateModifiers = new PlayerStateModifiers();
         ChatInstance chatInstance = new ChatInstance();
-        EconomyCommand economyCommand = new EconomyCommand(economy);
+        EconomyCommand economyCommand = new EconomyCommand("economy", economy);
         List<String> economyCommands = List.of("balance", "baltop", "pay", "economy");
 
         economyCommands.forEach(name -> getCommand(name).setExecutor(economyCommand));
