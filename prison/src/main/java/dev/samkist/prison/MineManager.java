@@ -1,5 +1,6 @@
 package dev.samkist.prison;
 
+import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -8,25 +9,37 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import java.util.ArrayList;
 
 public class MineManager implements Listener {
+    public String worldName;
+    ArrayList<Mine> mines = new ArrayList<>();
+
+    public MineManager(String worldName) {
+        this.worldName = worldName;
+    }
     @EventHandler
     public void blockPlace(BlockPlaceEvent e) { //WORLD CHECK FIRST
-            //check if on plot
-        if (!e.getPlayer().isOp()) {
-            e.setCancelled(true);
+        Block block = e.getBlock();
+        if (e.getPlayer().getWorld().getName() == this.worldName) {
+            /*for (Mine mine : this.mines) {
+                if (e.getPlayer().isOp() || (e.getPlayer().hasPermission(mine.permission) && mine.containsBlock(e.getBlock().getX(), e.getBlock().getZ()))) {
+                    return;
+                }
+            }
+            e.setCancelled(true);*/
+            mines.stream().filter(m -> m.containsBlock(block.getX(), block.getZ()));
         }
     }
     @EventHandler
     public void blockBreak(BlockBreakEvent e) { //WORLD CHECK FIRST
-        for (Mine mine : this.mines) {
-            if (e.getPlayer().isOp() || e.getPlayer().hasPermission(mine.permission) && mine.containsBlock(e.getBlock().getX(), e.getBlock().getY())) {
-                return;
+        if (e.getPlayer().getWorld().getName() == this.worldName) {
+            for (Mine mine : this.mines) {
+                if (e.getPlayer().isOp() || (e.getPlayer().hasPermission(mine.permission) && mine.containsBlock(e.getBlock().getX(), e.getBlock().getZ()))) {
+                    return;
+                }
             }
+            e.setCancelled(true);
         }
-        e.setCancelled(true);
     }
-    ArrayList<Mine> mines = new ArrayList<Mine>();
-    public MineManager() {}
-    public boolean create(String name, String permission, Block[] blockSpawn, int minePos1, int minePos2, int zonePos1, int zonePos2, int legendLocation) {
+    public boolean create(String name, String permission, MineBlock[] mineBlockSpawn, int minePos1, int minePos2, int zonePos1, int zonePos2, int legendLocation) {
         //IF Mine exist return false
         this.save();
         return true;
