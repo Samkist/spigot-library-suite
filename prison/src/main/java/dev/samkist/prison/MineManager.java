@@ -1,12 +1,16 @@
 package dev.samkist.prison;
 
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class MineManager implements Listener {
     public String worldName;
@@ -17,27 +21,32 @@ public class MineManager implements Listener {
     }
     @EventHandler
     public void blockPlace(BlockPlaceEvent e) { //WORLD CHECK FIRST
+        Player player = e.getPlayer();
         Block block = e.getBlock();
-        if (e.getPlayer().getWorld().getName() == this.worldName) {
-            /*for (Mine mine : this.mines) {
-                if (e.getPlayer().isOp() || (e.getPlayer().hasPermission(mine.permission) && mine.containsBlock(e.getBlock().getX(), e.getBlock().getZ()))) {
-                    return;
-                }
+        if (player.getWorld().getName().equalsIgnoreCase(this.worldName)) {
+            if(!player.isOp()) {
+                e.setCancelled(true);
             }
-            e.setCancelled(true);*/
-            mines.stream().filter(m -> m.containsBlock(block.getX(), block.getZ()));
         }
     }
+
     @EventHandler
     public void blockBreak(BlockBreakEvent e) { //WORLD CHECK FIRST
-        if (e.getPlayer().getWorld().getName() == this.worldName) {
-            for (Mine mine : this.mines) {
-                if (e.getPlayer().isOp() || (e.getPlayer().hasPermission(mine.permission) && mine.containsBlock(e.getBlock().getX(), e.getBlock().getZ()))) {
-                    return;
+        Player player = e.getPlayer();
+        Block block = e.getBlock();
+        if (player.getWorld().getName().equalsIgnoreCase(this.worldName)) {
+            @Nullable
+            Mine m = insideMine(block);
+            if(Objects.nonNull(m)) {
+                if(!(player.isOp() || player.hasPermission(m.permission))) {
+                    e.setCancelled(true);
                 }
             }
-            e.setCancelled(true);
         }
+    }
+
+    private Mine insideMine(Block block) {
+        return mines.stream().filter(m -> m.containsBlock(block.getX(), block.getZ())).findFirst().orElse(null);
     }
     public boolean create(String name, String permission, MineBlock[] mineBlockSpawn, int minePos1, int minePos2, int zonePos1, int zonePos2, int legendLocation) {
         //IF Mine exist return false

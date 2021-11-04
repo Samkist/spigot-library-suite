@@ -6,4 +6,5 @@ include 'prison'
 include 'broadcaster'
 include 'broadcaster'
 include 'entityclear'
+include 'portals'
 
