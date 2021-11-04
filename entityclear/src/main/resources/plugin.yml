@@ -1,0 +1,13 @@
+main: net.lumae.entityclear.EntityClear
+name: EntityClear
+description: Clear all dropped items and entities
+database: false
+authors: [ cbotte21, Samkist ]
+load: POSTWORLD
+api-version: 1.17
+version: 1.0.0
+commands:
+  clear:
+    permission: entityclear.clear
+    description: Clear all entities
+    usage: /clear
