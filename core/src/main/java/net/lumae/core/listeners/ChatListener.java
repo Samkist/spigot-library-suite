@@ -23,7 +23,7 @@ public class ChatListener implements Listener {
     private final List<ChatFormat> chatFormats;
 
     public ChatListener() {
-        chatFormats = plugin.getDataManager().getChatFormats();
+        chatFormats = plugin.getDataManager().getChatFormats().values().stream().toList();
     }
 
     @EventHandler

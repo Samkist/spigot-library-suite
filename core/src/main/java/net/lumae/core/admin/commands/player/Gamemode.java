@@ -3,15 +3,24 @@ package net.lumae.core.admin.commands.player;
 import net.lumae.core.modifiers.PlayerStateModifiers;
 import net.lumae.core.admin.commands.LumaeExecutor;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class Gamemode implements LumaeExecutor {
+import java.util.Arrays;
+import java.util.List;
+
+public class Gamemode extends LumaeExecutor {
+    public Gamemode(String commandName) {
+        super(commandName);
+    }
+
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (args.length == 1) {
+        /*if (args.length == 1) {
             if (args[0].equals("1") || args[0].equals("creative") || args[0].equals("c")) {
                 PlayerStateModifiers.setCreative((Player) sender);
             } else if (args[0].equals("0") || args[0].equals("survival") || args[0].equals("s")) {
@@ -25,7 +34,7 @@ public class Gamemode implements LumaeExecutor {
             } else return false;
         } else {
             PlayerStateModifiers.changeGamemode((Player) sender);
-        }
+        }*/
         sender.sendMessage("[LunaeMC] Gamemode set!");
         return true;
     }

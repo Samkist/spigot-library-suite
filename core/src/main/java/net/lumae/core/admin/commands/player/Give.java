@@ -9,7 +9,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class Give implements LumaeExecutor {
+public class Give extends LumaeExecutor {
+    public Give(String commandName) {
+        super(commandName);
+    }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length == 1) {
@@ -25,10 +29,5 @@ public class Give implements LumaeExecutor {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String commandName() {
-        return "give";
     }
 }

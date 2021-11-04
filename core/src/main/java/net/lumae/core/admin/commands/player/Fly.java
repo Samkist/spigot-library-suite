@@ -8,9 +8,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class Fly implements LumaeExecutor {
+public class Fly extends LumaeExecutor {
     PlayerStateModifiers state;
-    public Fly(PlayerStateModifiers state) {
+    public Fly(String commandName, PlayerStateModifiers state) {
+        super(commandName);
         this.state = state;
     }
 

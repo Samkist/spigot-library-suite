@@ -16,14 +16,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 
-public class EconomyCommand implements LumaeExecutor {
+public class EconomyCommand extends LumaeExecutor {
 
-    private final Core core = JavaPlugin.getPlugin(Core.class);
     private final Economy economy;
 
-    public EconomyCommand(Economy economy) {
+    public EconomyCommand(String commandName, Economy economy) {
+        super(commandName);
         this.economy = economy;
     }
+
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] argsArray) {
@@ -39,7 +40,7 @@ public class EconomyCommand implements LumaeExecutor {
                 break;
             case "baltop":
                 //TODO: Sort players in Query
-                List<LumaePlayer> baltopPlayers = core.getDbManager().topPlayersByField("balance");
+                List<LumaePlayer> baltopPlayers = getCore().getDbManager().topPlayersByField("balance");
                 break;
             case "pay":
                 if (!economy.transfer((Player) sender, Bukkit.getPlayer(args.get(0)), Integer.valueOf(args.get(1)))) return false;

@@ -7,7 +7,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-public class Xp implements LumaeExecutor {
+public class Xp extends LumaeExecutor {
+    public Xp(String commandName) {
+        super(commandName);
+    }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length != 2 || args.length != 3) return false;
@@ -25,10 +29,5 @@ public class Xp implements LumaeExecutor {
                 break;
         }
         return true;
-    }
-
-    @Override
-    public String commandName() {
-        return "xp";
     }
 }

@@ -6,7 +6,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-public class Day implements LumaeExecutor {
+public class Day extends LumaeExecutor {
+    public Day(String commandName) {
+        super(commandName);
+    }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         GameStateModifiers.setTime(7);

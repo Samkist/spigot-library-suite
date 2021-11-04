@@ -4,34 +4,25 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
 import com.mongodb.MongoCredential;
-import net.lumae.core.api.APIPlayer;
-import net.lumae.core.api.EconomyController;
-import net.lumae.core.api.PlayerStateController;
-import net.lumae.core.modifiers.GameStateModifiers;
-import net.lumae.core.modifiers.PlayerStateModifiers;
 import net.lumae.core.admin.commands.LumaeExecutor;
 import net.lumae.core.admin.commands.player.*;
 import net.lumae.core.admin.commands.world.Day;
 import net.lumae.core.api.CoreAPI;
 import net.lumae.core.data.DataManager;
 import net.lumae.core.data.database.DBManager;
-import net.lumae.core.admin.commands.player.EconomyCommand;
 import net.lumae.core.data.local.FileManager;
 import net.lumae.core.economy.Economy;
-import net.lumae.core.fun.PlayerCosmeticEvents;
 import net.lumae.core.listeners.JoinLeaveListener;
 import net.lumae.core.listeners.PlayerDataListener;
+import net.lumae.core.modifiers.PlayerStateModifiers;
 import net.lumae.core.utils.ChatInstance;
-import org.bukkit.GameMode;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.BiConsumer;
 
 public class Core extends JavaPlugin {
 
@@ -51,6 +42,10 @@ public class Core extends JavaPlugin {
 
         dataManager = new DataManager(fileManager, dbManager);
 
+        dbManager.initialize();
+
+        dataManager.initialize();
+
         coreAPI = CoreAPI.initialize(this);
 
         economy = new Economy();
@@ -61,15 +56,25 @@ public class Core extends JavaPlugin {
         //State modifiers initializers
         PlayerStateModifiers playerStateModifiers = new PlayerStateModifiers();
         ChatInstance chatInstance = new ChatInstance();
-        EconomyCommand economyCommand = new EconomyCommand(economy);
+        EconomyCommand economyCommand = new EconomyCommand("economy", economy);
         List<String> economyCommands = List.of("balance", "baltop", "pay", "economy");
 
         economyCommands.forEach(name -> getCommand(name).setExecutor(economyCommand));
 
         //Command executors
-        List<LumaeExecutor> commands = Arrays.asList(new Cleanse(), new Enderchest(),
-                new Feed(), new Fly(playerStateModifiers), new Gamemode(), new Give(), new Godmode(playerStateModifiers),
-                new Heal(), new Invsee(), new Xp(), new Day());
+        List<LumaeExecutor> commands = Arrays.asList(
+                new Cleanse("cleanse"),
+                new Enderchest("enderchest"),
+                new Feed("feed"),
+                new Fly("fly", playerStateModifiers),
+                new Gamemode("gamemode"),
+                new Give("give"),
+                new Godmode("godmode", playerStateModifiers),
+                new Heal("heal"),
+                new Invsee("invsee"),
+                new Xp("xp"),
+                new Day("day")
+        );
 
         //Events
         this.getServer().getPluginManager().registerEvents(playerDataListener, this);

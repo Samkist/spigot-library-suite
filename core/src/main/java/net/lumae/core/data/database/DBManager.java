@@ -20,6 +20,7 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 
@@ -29,12 +30,12 @@ import static com.mongodb.client.model.Filters.*;
 
 public class DBManager {
     private final Core plugin;
-    private final DataManager dataManager;
     private final MongoCredential credential;
     private final String host;
     private final String database;
     private final Integer port;
     private boolean init;
+    private DataManager dataManager;
     private MongoClient mongoClient;
     private MongoDatabase mongoDatabase;
     private String connectionString;
@@ -54,7 +55,6 @@ public class DBManager {
         this.host = null;
         this.database = database;
         this.port = Integer.valueOf(0);
-        initialize();
     }
 
     public DBManager(Core plugin, MongoCredential credential, String host, String database, Integer port) {
@@ -64,12 +64,12 @@ public class DBManager {
         this.host = host;
         this.database = database;
         this.port = port;
-        initialize();
     }
 
     public void initialize() {
         if (this.init)
             return;
+        dataManager = plugin.getDataManager();
         if (Objects.nonNull(this.connectionString)) {
             this.mongoClient = MongoClients.create(MongoClientSettings.builder()
                     .codecRegistry(codecRegistry)
