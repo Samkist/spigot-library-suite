@@ -1,4 +1,4 @@
-package net.lumae.core.admin.commands;
+package net.lumae.core.commands;
 
 import net.lumae.core.Core;
 import org.bukkit.command.CommandExecutor;

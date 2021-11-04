@@ -1,7 +1,7 @@
-package net.lumae.core.admin.commands.player;
+package net.lumae.core.commands.player;
 
 import net.lumae.core.modifiers.PlayerStateModifiers;
-import net.lumae.core.admin.commands.LumaeExecutor;
+import net.lumae.core.commands.LumaeExecutor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

@@ -71,11 +71,9 @@ public class PlayerStateModifiers {
     }
     public static void enableFlight(Player p) {
         p.setAllowFlight(true);
-        p.sendMessage("[PluginSuite] Flight enabled!");
     }
     public static void disableFlight(Player p) {
         p.setAllowFlight(false);
-        p.sendMessage("[PluginSuite] Flight disabled!");
     }
     public static boolean isFlying(Player p) {
         return p.getAllowFlight();
@@ -92,11 +90,9 @@ public class PlayerStateModifiers {
     }
     public static void enableGodmode(Player p) {
         ACTIVE_GODMODE.add(p);
-        p.sendMessage("[PluginSuite] Godmode enabled!");
     }
     public static void disableGodmode(Player p) {
         ACTIVE_GODMODE.remove(p);
-        p.sendMessage("[PluginSuite] Godmode disabled!");
     }
     public static void toggleGodmode(Player p) {
         if (isGodmode(p)) {

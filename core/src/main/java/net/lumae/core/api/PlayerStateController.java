@@ -73,8 +73,7 @@ public class PlayerStateController {
     public APIResponse<Player, GameMode> gameMode() {
         return new APIResult<>(p -> p.getGameMode(), player);
     }
-
-
+    
 
 
 

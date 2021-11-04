@@ -1,7 +1,7 @@
-package net.lumae.core.admin.commands.world;
+package net.lumae.core.commands.world;
 
+import net.lumae.core.commands.LumaeExecutor;
 import net.lumae.core.modifiers.GameStateModifiers;
-import net.lumae.core.admin.commands.LumaeExecutor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
