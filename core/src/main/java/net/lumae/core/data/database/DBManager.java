@@ -20,6 +20,7 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
@@ -67,8 +68,9 @@ public class DBManager {
     }
 
     public void initialize() {
-        if (this.init)
+        if (this.init) {
             return;
+        }
         dataManager = plugin.getDataManager();
         if (Objects.nonNull(this.connectionString)) {
             this.mongoClient = MongoClients.create(MongoClientSettings.builder()
@@ -104,14 +106,16 @@ public class DBManager {
     }
 
     public Optional<LumaePlayer> topPlayerByField(String field) {
-        if (!this.init)
+        if (!this.init) {
             return Optional.empty();
+        }
         return Optional.ofNullable(this.players.find().sort(Sorts.descending(field)).first());
     }
 
     public List<LumaePlayer> topPlayersByField(String field) {
-        if (!this.init)
+        if (!this.init) {
             return List.of();
+        }
         ArrayList<LumaePlayer> players = new ArrayList<>();
         Objects.requireNonNull(players);
         this.players.find().sort(Sorts.descending(field)).forEach(players::add);
@@ -119,22 +123,25 @@ public class DBManager {
     }
 
     public Optional<LumaePlayer> saveLumaePlayer(LumaePlayer serverPlayer) {
-        if (!this.init)
+        if (!this.init) {
             return Optional.empty();
+        }
         return players.replaceOne(
                 Filters.eq("uuid", serverPlayer.getUuid()), serverPlayer, replaceOptions).wasAcknowledged() ? Optional.of(serverPlayer) : Optional.empty();
     }
 
     public Optional<LumaePlayer> initializeLumaePlayer(Player player) {
-        if (!this.init)
+        if (!this.init) {
             return Optional.empty();
+        }
         LumaePlayer data = new LumaePlayer(player);
         return this.players.insertOne(data).wasAcknowledged() ? Optional.of(data) : Optional.empty();
     }
 
     public Optional<LumaePlayer> loadLumaePlayer(Player player) {
-        if (!this.init)
+        if (!this.init) {
             return Optional.empty();
+        }
         LumaePlayer serverPlayer = players.find(eq("uuid", player.getUniqueId().toString())).first();
         return Objects.nonNull(serverPlayer) ? Optional.of(serverPlayer) : initializeLumaePlayer(player);
     }
@@ -145,8 +152,9 @@ public class DBManager {
 
     public List<ChatFormat> loadChatFormats() {
         ArrayList<ChatFormat> formats = new ArrayList<>();
-        if (!this.init)
+        if (!this.init) {
             return formats;
+        }
         if(!isEmpty(chatFormats)) {
             this.chatFormats.find().forEach(formats::add);
         } else {
@@ -170,8 +178,9 @@ public class DBManager {
      */
     public List<JoinLeaveFormat> loadJoinLeaveFormats() {
         ArrayList<JoinLeaveFormat> formats = new ArrayList<>();
-        if (!this.init)
+        if (!this.init) {
             return formats;
+        }
         if(!isEmpty(joinLeaveFormats)) {
             this.joinLeaveFormats.find().forEach(formats::add);
         } else {
@@ -188,8 +197,9 @@ public class DBManager {
 
     public List<Message> loadMessages() {
         ArrayList<Message> messages = new ArrayList<>();
-        if (!this.init)
+        if (!this.init) {
             return messages;
+        }
         if(!isEmpty(pluginMessages)) {
             this.pluginMessages.find().forEach(messages::add);
         } else {
