@@ -1,9 +1,10 @@
 package me.cbotte21.kits;
 
 import net.lumae.core.Core;
-import net.lumae.core.api.APIFileManager;
-import net.lumae.core.api.CoreAPI;
+import net.lumae.core.api.*;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /*
@@ -30,6 +31,13 @@ public class Kits extends JavaPlugin {
         this.getCommand("kit create").setExecutor(kitManager);
         this.config.getConfigurationSection("kit").getValues(false);
         this.fileManager.saveConfig("kits.yml");
+
+        /*APIPlayer player = coreApi.getAPIPlayer(Bukkit.getPlayer("Samkist"));
+        PlayerStateController playerStateController = player.playerStateController();
+        APIResponse<Player, Integer> response = playerStateController.foodLevel(10);
+        response.queue((p, foodLevel) -> {
+            p.sendMessage("You're food level is now " + foodLevel);
+        });*/
 
     }
     @Override

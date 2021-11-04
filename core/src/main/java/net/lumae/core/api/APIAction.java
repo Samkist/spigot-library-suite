@@ -27,7 +27,6 @@ public class APIAction<K, V>  implements APIResponse<K, V> {
     }
 
     public V queue() {
-        action.accept(applied);
         if(Objects.nonNull(action)) {
             action.accept(applied);
         } else {

@@ -25,7 +25,7 @@ public class PlayerStateController {
     }
 
     public APIResponse<Player, Double> health() {
-        return new APIResult<>(p -> p.getHealth(), player);
+        return new APIResult<Player, Double>(p -> p.getHealth(), player);
     }
 
     public APIResponse<Player, Integer> foodLevel(int level) {
