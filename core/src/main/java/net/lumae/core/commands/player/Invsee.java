@@ -1,7 +1,7 @@
-package net.lumae.core.admin.commands.player;
+package net.lumae.core.commands.player;
 
 import net.lumae.core.modifiers.PlayerStateModifiers;
-import net.lumae.core.admin.commands.LumaeExecutor;
+import net.lumae.core.commands.LumaeExecutor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -17,7 +17,7 @@ public class Invsee extends LumaeExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length != 1) return false;
         PlayerStateModifiers.openInventory((Player)sender, Bukkit.getPlayer(args[0]));
-        sender.sendMessage("[LumaeMC] You have opened "+Bukkit.getPlayer(args[0]).getName()+"'s inventory!");
+        sender.sendMessage("You have opened "+Bukkit.getPlayer(args[0]).getName()+"'s inventory!");
         return true;
     }
 

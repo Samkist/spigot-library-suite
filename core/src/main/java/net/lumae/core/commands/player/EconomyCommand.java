@@ -1,16 +1,12 @@
-package net.lumae.core.admin.commands.player;
+package net.lumae.core.commands.player;
 
-import net.lumae.core.Core;
-import net.lumae.core.admin.commands.LumaeExecutor;
+import net.lumae.core.commands.LumaeExecutor;
 import net.lumae.core.data.entities.LumaePlayer;
 import net.lumae.core.economy.Economy;
-import org.bson.types.Decimal128;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -43,11 +39,11 @@ public class EconomyCommand extends LumaeExecutor {
                 List<LumaePlayer> baltopPlayers = getCore().getDbManager().topPlayersByField("balance");
                 break;
             case "pay":
-                if (!economy.transfer((Player) sender, Bukkit.getPlayer(args.get(0)), Integer.valueOf(args.get(1)))) return false;
+                if (!economy.transfer((Player) sender, Bukkit.getPlayer(args.get(0)), Double.valueOf(args.get(1)))) return false;
                 break;
             case "economy":
                 Player p = Bukkit.getPlayer(args.get(0));
-                int amount = Integer.valueOf(args.get(2));
+                double amount = Double.valueOf(args.get(2));
                 if (args.get(1).equalsIgnoreCase("set")) {
                     economy.set(p, amount);
                 } else if (args.get(1).equalsIgnoreCase("deposit")) {
