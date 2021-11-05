@@ -10,5 +10,25 @@ joinLeaveFormats:
     leaveFormat: '&e%player_name% &7has departed!'
     priority: 99999
 pluginMessages:
+  server-prefix:
+    format: '&b[Lumae]'
+  core-enable:
+    format: '&bEnabling Core...'
+  core-disable:
+    format: '&bDisabling Core...'
+  core-error:
+    format: '&cFatal error occurred, disabling Core'
+  core-version:
+    format: '&bVersion %version%'
+  fmgr-init:
+    format: '&bFile Manager successfully initialized'
+  fmgr-fail:
+    format: '&cFile Manager failed to initialize!'
+  dbmgr-init:
+    format: '&bDatabase Manager successfully initialized'
+  datamgr-init:
+    format: '&bData Manager successfully initialized'
+  api-init:
+    format: '&bCore API Service successfully initialized'
   lumae-motd:
     format: '&eWelcome back to Lumae &7%player_name%!'

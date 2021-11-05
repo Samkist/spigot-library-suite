@@ -12,16 +12,10 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.*;
 import net.lumae.core.Core;
 import net.lumae.core.data.DataManager;
-import net.lumae.core.data.entities.ChatFormat;
-import net.lumae.core.data.entities.JoinLeaveFormat;
-import net.lumae.core.data.entities.LumaePlayer;
-import net.lumae.core.data.entities.Message;
+import net.lumae.core.data.entities.*;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 
@@ -90,6 +84,11 @@ public class DBManager {
         this.joinLeaveFormats = this.mongoDatabase.getCollection("joinLeaveFormats", JoinLeaveFormat.class);
         this.players = this.mongoDatabase.getCollection("players", LumaePlayer.class);
         this.pluginMessages = this.mongoDatabase.getCollection("pluginMessages", Message.class);
+    }
+
+    public <TDataObj extends DatabaseObject> MongoCollection<TDataObj> grabCollection(TDataObj type) {
+        String coll = type.getCollectionName();
+        return mongoDatabase.getCollection(coll, (Class<TDataObj>)type.getClass());
     }
 
     public void saveAllPlayers(Map<UUID, LumaePlayer> serverPlayerMap) {

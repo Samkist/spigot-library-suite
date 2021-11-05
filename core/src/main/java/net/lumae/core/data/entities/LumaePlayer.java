@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Calendar;
 
-public class LumaePlayer {
+public class LumaePlayer implements DatabaseObject{
     private String uuid;
     private String lastUsername;
     private Decimal128 balance;
@@ -96,4 +96,9 @@ public class LumaePlayer {
     public String getBanReason() { return this.banReason; }
 
     public void setBanReason(String reason) { this.banReason = reason; }
+
+    @Override
+    public String getCollectionName() {
+        return "players";
+    }
 }

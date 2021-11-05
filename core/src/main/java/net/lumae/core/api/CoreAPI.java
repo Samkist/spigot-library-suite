@@ -2,10 +2,7 @@ package net.lumae.core.api;
 
 import net.lumae.core.Core;
 import net.lumae.core.data.entities.LumaePlayer;
-import net.lumae.core.economy.Economy;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -40,7 +37,11 @@ public class CoreAPI {
         return new APIPlayer(core.getServer().getPlayer(uuid));
     }
 
-    public APIFileManager getFileManagerAPI() {
-        return new APIFileManager();
+    public FileManagerAPI getFileManagerAPI() {
+        return new FileManagerAPI();
+    }
+
+    public DatabaseAPI getDatabaseAPI() {
+        return new DatabaseAPI();
     }
 }

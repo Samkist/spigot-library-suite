@@ -1,6 +1,6 @@
 package net.lumae.core.data.entities;
 
-public class JoinLeaveFormat extends Format {
+public class JoinLeaveFormat extends Format implements DatabaseObject{
 
     private String leaveFormat;
     public JoinLeaveFormat() {
@@ -31,5 +31,10 @@ public class JoinLeaveFormat extends Format {
 
     public void setLeaveFormat(String leaveFormat) {
         this.leaveFormat = leaveFormat;
+    }
+
+    @Override
+    public String getCollectionName() {
+        return "joinLeaveFormats";
     }
 }

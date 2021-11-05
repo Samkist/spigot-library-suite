@@ -1,6 +1,6 @@
 package net.lumae.core.data.entities;
 
-public class Message {
+public class Message implements DatabaseObject {
 
     private String messageId;
     private String message;
@@ -28,5 +28,10 @@ public class Message {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public String getCollectionName() {
+        return "pluginMessages";
     }
 }

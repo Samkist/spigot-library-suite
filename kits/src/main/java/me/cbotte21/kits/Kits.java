@@ -1,11 +1,14 @@
 package me.cbotte21.kits;
 
+import com.mongodb.client.MongoCollection;
 import net.lumae.core.Core;
 import net.lumae.core.api.*;
-import org.bukkit.Bukkit;
+import net.lumae.core.data.entities.DatabaseObject;
+import net.lumae.core.data.entities.LumaePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.function.Function;
 
 /*
 NOTE: Have not tried running yet
@@ -19,7 +22,7 @@ TODO:
 
 public class Kits extends JavaPlugin {
     private CoreAPI coreApi = JavaPlugin.getPlugin(Core.class).api();
-    private APIFileManager fileManager = coreApi.getFileManagerAPI();
+    private FileManagerAPI fileManager = coreApi.getFileManagerAPI();
     private FileConfiguration config = fileManager.getConfig("kits.yml");
     @Override
     public void onEnable() {
@@ -39,6 +42,18 @@ public class Kits extends JavaPlugin {
             p.sendMessage("You're food level is now " + foodLevel);
         });*/
 
+        /*
+        The function supplied to the query method must be of generic type
+        Function<MongoCollection<? extends DatabaseObject>, DatabaseObject>
+
+        An example of a Database Object is LumaePlayer
+
+        DatabaseAPI databaseApi = coreApi.getDatabaseAPI();
+        Function<MongoCollection<LumaePlayer>, LumaePlayer> func = (coll) -> coll.find().first();
+        APIResponse<Void, LumaePlayer> response = databaseApi.query(func);
+        response.queue(p -> {
+           //foo
+        });*/
     }
     @Override
     public void onDisable() {
