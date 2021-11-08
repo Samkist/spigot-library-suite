@@ -22,6 +22,7 @@ public class Plot {
     public boolean isOwner(Player p) {
         return this.owner == p;
     }
+    public double getBuyPrice() { return this.price; }
     public double getSellPrice() {
         return this.price*.7;
     }

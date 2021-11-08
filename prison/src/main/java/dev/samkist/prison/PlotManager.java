@@ -1,8 +1,10 @@
 package dev.samkist.prison;
 
+import net.lumae.core.api.APIPlayer;
+import net.lumae.core.api.CoreAPI;
+import net.lumae.core.api.EconomyController;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -11,46 +13,45 @@ import java.util.ArrayList;
 
 /*
 TODO:
- - Allow input of amount of plots.
- - Generate plots with FAWE. Loop through and make regions from [0,0,0] in flat world.
+ - Add optional builders / friends.
 
  */
 
 public class PlotManager implements Listener {
-    @EventHandler
-    public void blockPlace(BlockPlaceEvent e) { //WORLD CHECK FIRST
-        //check if on plot
-        if (!this.getPlot(e.getBlock().getLocation()).isOwner(e.getPlayer())) { //Plot could be null
-            e.setCancelled(true);
-        }
-    }
-    @EventHandler
-    public void blockBreak(BlockBreakEvent e) { //WORLD CHECK FIRST
-        if (!this.getPlot(e.getBlock().getLocation()).isOwner(e.getPlayer())) { //Plot could be null
-            e.setCancelled(true);
-        }
-    }
     ArrayList<Plot> plots = new ArrayList<Plot>();
+    CoreAPI coreAPI;
+    String worldName;
+    public PlotManager(CoreAPI coreAPI, String worldName) {
+        this.coreAPI = coreAPI;
+        this.worldName = worldName;
+    }
     public Plot getPlot(Location loc) {
-        for (Plot plot : this.plots) {
-            if (plot.region.contains(loc.getBlockX(), loc.getBlockY())) return plot;
-        }
-        return null;
+        return plots.stream().filter(p -> p.region.contains(loc.getBlockX(), loc.getBlockZ())).findFirst().orElse(null);
     }
     public boolean purchase(Plot plot, Player p) {
-        if (!plot.isOwned()) { //TODO: Check player money and withdraw
+        EconomyController econP = coreAPI.getAPIPlayer(p).economyController();
+        if (!plot.isOwned() && econP.attemptWithdraw(plot.getBuyPrice()).queue().get()) { //TODO: Check player money and withdraw
             plot.setOwner(p);
-            p.sendMessage("[Prison] Plot purchased!");
+            save();
             return true;
         }
         return false;
     }
-    public void sell(Plot plot, Player p) {
-        if (plot.getOwner() == p) {
-            plot.sell();
-            p.sendMessage("[Prison] Plot sold for $"+plot.getSellPrice()+".");
-        } else {
-            p.sendMessage("[Prison] You do not own this plot!");
-        }
+    public void sell(Plot plot) {
+        //TODO: add economy support.
+        plot.setOwner(null);
+    }
+    public boolean validPlace(BlockPlaceEvent e) {
+        Player p = e.getPlayer();
+        Plot plot = getPlot(e.getPlayer().getLocation());
+        return (p.getWorld().getName().equalsIgnoreCase(this.worldName) && plot.isOwner(e.getPlayer()));
+    }
+    public boolean validBreak(BlockBreakEvent e) {
+        Player p = e.getPlayer();
+        Plot plot = getPlot(e.getPlayer().getLocation());
+        return (p.getWorld().getName().equalsIgnoreCase(this.worldName) && plot.isOwner(e.getPlayer()));
+    }
+    public void save() {
+        //TODO: Upload plots to DB
     }
 }

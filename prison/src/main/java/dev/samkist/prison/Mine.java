@@ -1,11 +1,13 @@
 package dev.samkist.prison;
 
 import com.sk89q.worldedit.regions.Region;
+import net.lumae.core.data.util.Pair;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
@@ -15,12 +17,12 @@ public class Mine implements Listener {
     Region mineRegion, zoneRegion;
     Location legendPosition, spawnPosition;
     ArrayList<Boss> bosses = new ArrayList<Boss>();
-    ArrayList<MineBlock> mineBlocks = new ArrayList<MineBlock>();
-    public Mine(String name, String permission, boolean pvp, ArrayList<MineBlock> mineBlocks, ArrayList<Boss> bosses, Region mineRegion, Region zoneRegion, Location legendPosition, Location spawnPosition) {
+    ArrayList<Pair<ItemStack, Double>> blockSpawn = new ArrayList<Pair<ItemStack, Double>>();  //Block and spawn percentage
+    public Mine(String name, String permission, boolean pvp, ArrayList<Pair<ItemStack, Double>> blockSpawn, ArrayList<Boss> bosses, Region mineRegion, Region zoneRegion, Location legendPosition, Location spawnPosition) {
         this.name = name;
         this.permission = permission;
         this.pvp = pvp;
-        this.mineBlocks = mineBlocks;
+        this.blockSpawn = blockSpawn;
         this.bosses = bosses;
         this.mineRegion = mineRegion;
         this.zoneRegion = zoneRegion;
@@ -53,6 +55,7 @@ public class Mine implements Listener {
         this.teleportPlayersOutZone();
         this.DISABLED = true;
         /*
+        TODO: Add walk command listener, and dont allow entry.
         Teleport all players inside zone to spawn
         Send all players that were teleported a message saying the mine was disabled
          */
@@ -60,8 +63,5 @@ public class Mine implements Listener {
     public void teleport(Player p) {
         p.teleport(this.spawnPosition);
         p.sendMessage("[Prison] Teleported.");
-    }
-    public boolean containsBlock(int x, int z) {
-        return this.mineRegion.contains(x, z);
     }
 }

@@ -1,63 +1,41 @@
 package dev.samkist.prison;
 
+import com.sk89q.worldedit.regions.Region;
+import net.lumae.core.data.util.Pair;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class MineManager implements Listener {
-    public String worldName;
     ArrayList<Mine> mines = new ArrayList<>();
+    public String worldName;
 
     public MineManager(String worldName) {
         this.worldName = worldName;
     }
-    @EventHandler
-    public void blockPlace(BlockPlaceEvent e) { //WORLD CHECK FIRST
-        Player player = e.getPlayer();
-        Block block = e.getBlock();
-        if (player.getWorld().getName().equalsIgnoreCase(this.worldName)) {
-            if(!player.isOp()) {
-                e.setCancelled(true);
-            }
-        }
-    }
 
-    @EventHandler
-    public void blockBreak(BlockBreakEvent e) { //WORLD CHECK FIRST
-        Player player = e.getPlayer();
-        Block block = e.getBlock();
-        if (player.getWorld().getName().equalsIgnoreCase(this.worldName)) {
-            @Nullable
-            Mine m = insideMine(block);
-            if(Objects.nonNull(m)) {
-                if(!(player.isOp() || player.hasPermission(m.permission))) {
-                    e.setCancelled(true);
-                }
-            }
-        }
+    public boolean create(String name, String permission) {
+        ArrayList<Pair<ItemStack, Double>> blockSpawn = new ArrayList<>();
+        blockSpawn.add(new Pair<ItemStack, Double>(new ItemStack(Material.STONE), 1.0));
+        return create(name, permission, false, blockSpawn, new ArrayList<Boss>(), null, null, null, null);
     }
-
-    private Mine insideMine(Block block) {
-        return mines.stream().filter(m -> m.containsBlock(block.getX(), block.getZ())).findFirst().orElse(null);
-    }
-    public boolean create(String name, String permission, MineBlock[] mineBlockSpawn, int minePos1, int minePos2, int zonePos1, int zonePos2, int legendLocation) {
-        //IF Mine exist return false
+    public boolean create(String name, String permission, boolean pvp, ArrayList<Pair<ItemStack, Double>> blockSpawn, ArrayList<Boss> bosses, Region mineRegion, Region zoneRegion, Location spawnLocation, Location legendLocation) {
+        if (Objects.nonNull(get(name))) return false;
+        this.mines.add(new Mine(name, permission, pvp, blockSpawn, bosses, mineRegion, zoneRegion, legendLocation, spawnLocation));
         this.save();
         return true;
     }
     public Mine get(String name) {
-        for (Mine mine : this.mines) {
-            if (mine.name == name) return mine;
-        }
-        return null;
+        return mines.stream().filter(m -> m.name == name).findFirst().orElse(null);
     }
     public boolean delete(Mine mine) {
         if (this.mines.contains(mine)) {
@@ -67,7 +45,28 @@ public class MineManager implements Listener {
         }
         return false;
     }
+    private Mine insideMine(Block block) {
+        return mines.stream().filter(m -> m.mineRegion.contains(block.getX(), block.getZ())).findFirst().orElse(null);
+    }
+    public boolean validPlace(BlockPlaceEvent e) {
+        Player p = e.getPlayer();
+        return (p.getWorld().getName().equalsIgnoreCase(this.worldName) && (p.isOp() || p.hasPermission("prison.alter")));
+    }
+    public boolean validBreak(BlockBreakEvent e) {
+        Player player = e.getPlayer();
+        Block block = e.getBlock();
+        if (player.getWorld().getName().equalsIgnoreCase(this.worldName)) {
+            @Nullable
+            Mine m = insideMine(block);
+            if(Objects.nonNull(m)) {
+                if(!(player.isOp() || player.hasPermission(m.permission))) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     public void save() {
-
+        //TODO: Upload mines to db
     }
 }

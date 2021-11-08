@@ -1,0 +1,12 @@
+main: net.lumae.customsaddles.CustomSaddles
+name: CustomSaddles
+description: Add saddles to all mobs!
+version: 1.0.0
+api-version: 1.17
+author: cbotte21
+load: POSTWORLD
+database: false
+commands:
+  saddle:
+    usage: /saddle <EntityType> || /saddle <TargetPlayer> <EntityType> <?Amount>
+    description: Spawn a saddle

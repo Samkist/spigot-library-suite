@@ -1,0 +1,10 @@
+encapsulate close portals in groups.
+
+one big region with overlapping porals in group.
+
+if (group.region.contains(POS)) {
+    forEach(group portal contains) //random keywords
+}
+
+Will allow better server optimization,
+allows skipping of multiple contains.

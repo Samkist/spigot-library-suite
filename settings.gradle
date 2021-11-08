@@ -7,4 +7,5 @@ include 'broadcaster'
 include 'broadcaster'
 include 'entityclear'
 include 'portals'
+include 'customsaddles'
 

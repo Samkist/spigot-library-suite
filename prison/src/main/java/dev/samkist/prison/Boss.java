@@ -18,5 +18,8 @@ public class Boss {
         this.damageMultiplyer = damageMultiplyer;
         this.spawnChance = spawnChance;
         this.dropTable = dropTable;
+        entity.setCustomName(name);
+        entity.setCustomNameVisible(true);
+        entity.setGlowing(true);
     }
 }

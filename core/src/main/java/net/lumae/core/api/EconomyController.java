@@ -3,6 +3,7 @@ package net.lumae.core.api;
 import net.lumae.core.economy.Economy;
 import org.bukkit.entity.Player;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
 
 public class EconomyController {
@@ -37,7 +38,11 @@ public class EconomyController {
 
     //TODO change to double
     public APIResponse<Player, Double> withdraw(Double amount) {
-        economy.withdraw(player, amount.intValue());
         return new APIAction<>(p -> economy.withdraw(p, amount), player, amount);
+    }
+
+    public APIResponse<Player, AtomicBoolean> attemptWithdraw(Double amount) { //TODO: Better way to implement?
+        AtomicBoolean success = new AtomicBoolean(false);
+        return new APIAction<>(p -> success.set(economy.attemptWithdraw(p, amount)), player, success);
     }
 }
