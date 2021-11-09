@@ -12,10 +12,12 @@ import net.lumae.core.data.DataManager;
 import net.lumae.core.data.database.DBManager;
 import net.lumae.core.data.local.FileManager;
 import net.lumae.core.economy.Economy;
+import net.lumae.core.events.CoreReadyEvent;
 import net.lumae.core.listeners.JoinLeaveListener;
 import net.lumae.core.listeners.PlayerDataListener;
 import net.lumae.core.modifiers.PlayerStateModifiers;
 import net.lumae.core.utils.ChatInstance;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.LoggerFactory;
@@ -47,6 +49,10 @@ public class Core extends JavaPlugin {
         dataManager.initialize();
 
         coreAPI = CoreAPI.initialize(this);
+
+        CoreReadyEvent readyEvent = new CoreReadyEvent(coreAPI);
+
+        Bukkit.getPluginManager().callEvent(readyEvent);
 
         economy = new Economy();
         //Listener initializers

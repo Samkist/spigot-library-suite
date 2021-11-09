@@ -1,5 +1,6 @@
 package net.lumae.core.api;
 
+import net.lumae.core.data.util.Pair;
 import net.lumae.core.economy.Economy;
 import org.bukkit.entity.Player;
 
@@ -41,8 +42,7 @@ public class EconomyController {
         return new APIAction<>(p -> economy.withdraw(p, amount), player, amount);
     }
 
-    public APIResponse<Player, AtomicBoolean> attemptWithdraw(Double amount) { //TODO: Better way to implement?
-        AtomicBoolean success = new AtomicBoolean(false);
-        return new APIAction<>(p -> success.set(economy.attemptWithdraw(p, amount)), player, success);
+    public APIResponse<Pair<Player, Double>, Boolean> attemptWithdraw(Double amount) { //TODO: Better way to implement?
+        return new APIResult<>(p -> economy.attemptWithdraw(p.getKey(), p.getValue()), new Pair<>(player, amount));
     }
 }
