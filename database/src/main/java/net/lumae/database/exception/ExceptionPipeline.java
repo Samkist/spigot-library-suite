@@ -5,7 +5,7 @@ public class ExceptionPipeline {
         try {
             throw exception;
         } catch(AbstractDatabaseException e) {
-
+            e.log();
         }
     }
 }

@@ -1,6 +1,5 @@
 package net.lumae.database.filter;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class FilterBuilder<T> {
