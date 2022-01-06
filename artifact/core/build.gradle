@@ -1,0 +1,13 @@
+test {
+    useJUnitPlatform()
+}
+
+shadowJar {
+    relocate("com.iridium", "net.lumae.iridium")
+    relocate("com.mongodb", "net.lumae.com.mongodb")
+    relocate("org.mongodb", "net.lumae.org.mongodb")
+    relocate("org.slf4j", "net.lumae.slf4j")
+    relocate("ch.qos.logback", "net.lumae.logback")
+    relocate("org.bson", "net.lumae.bson")
+    baseName "Core"
+}

@@ -1,6 +1,5 @@
 include 'lobby'
 include 'core'
-include 'manipulator'
 include 'kits'
 include 'prison'
 include 'broadcaster'
@@ -9,3 +8,4 @@ include 'entityclear'
 include 'portals'
 include 'database'
 include 'customsaddles'
+
