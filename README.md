@@ -8,3 +8,5 @@ This code shows us a lot of things. However I think it should be used purely as 
  -- Sam
 
 
+Okay. I'm ready to start working on this project.
+ -- Cody
