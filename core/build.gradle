@@ -1,0 +1,51 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "7.1.0"
+}
+
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+
+
+group = 'dev.samkist'
+version = '1.0-SNAPSHOT'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://papermc.io/repo/repository/maven-public/' }
+    maven { url "https://repo.dmulloy2.net/repository/public/" }
+    maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
+    maven { url 'https://nexus.iridiumdevelopment.net/repository/maven-public/' }
+    //https://nexus.iridiumdevelopment.net/repository/maven-public/com/iridium/IridiumColorAPI/1.0.5/IridiumColorAPI-1.0.5.pom
+    //https://nexus.iridiumdevelopment.net/com/iridium/IridiumColorAPI/1.0.5/IridiumColorAPI-1.0.5.pom
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+    compileOnly 'io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT'
+    compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0";
+    implementation 'com.iridium:IridiumColorAPI:1.0.6'
+    implementation 'org.mongodb:mongodb-driver-sync:4.3.3'
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'ch.qos.logback:logback-classic:1.2.6'
+    compileOnly 'me.clip:placeholderapi:2.10.10'
+    compileOnly 'net.luckperms:api:5.3'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+shadowJar {
+    relocate("com.iridium", "net.lumae.iridium")
+    relocate("com.mongodb", "net.lumae.com.mongodb")
+    relocate("org.mongodb", "net.lumae.org.mongodb")
+    relocate("org.slf4j", "net.lumae.slf4j")
+    relocate("ch.qos.logback", "net.lumae.logback")
+    relocate("org.bson", "net.lumae.bson")
+    baseName "Core"
+}
